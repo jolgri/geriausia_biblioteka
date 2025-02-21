@@ -1,5 +1,7 @@
 class Book {
     static bookId = 1;
+    static existingIsbns = new Set();
+  
     #title;
     #author;
     #isbn;
@@ -8,91 +10,134 @@ class Book {
     #is_checked_out;
     availability;
     #category;
-    //konstruktorius
-    constructor(bookTitle, bookAuthor, bookCategory, bookIsbn, bookPrice, bookDesc, is_checked_out){
-        Book.bookId++;;
-        this.#title = bookTitle;
-        this.#author = bookAuthor;
-        this.#category = bookCategory;
-        this.#isbn = bookIsbn;
-        this.#price = bookPrice;
-        this.#description = bookDesc;
-        this.#is_checked_out = is_checked_out;
+  
+    // Konstruktorius
+    constructor(bookTitle, bookAuthor, bookCategory, bookIsbn, bookPrice, bookDesc, is_checked_out) {
+      if (Book.existingIsbns.has(bookIsbn)) {
+        throw new Error("Šis ISBN jau egzistuoja!");
+      }
+  
+      if (!/^\d{13}$/.test(bookIsbn)) {
+        throw new Error("ISBN turi būti 13 skaitmenų sveikasis skaičius.");
+      }
+  
+      this.#isbn = bookIsbn;
+      Book.existingIsbns.add(bookIsbn); // Add ISBN to unique set
+  
+      Book.bookId++;
+      this.#title = bookTitle;
+      this.#author = bookAuthor;
+      this.#category = bookCategory;
+      this.#price = bookPrice;
+      this.#description = bookDesc;
+      this.#is_checked_out = is_checked_out;
     }
-
-    //getteriai
-    getBookId(){
-        return this.bookId;
+  
+    // Getteriai
+    getBookId() {
+      return this.bookId;
     }
-
-    getBookTitle(){
-        return this.#title;
+  
+    getBookTitle() {
+      return this.#title;
     }
-
-    getBookAuthor(){
-        return this.#author;
+  
+    getBookAuthor() {
+      return this.#author;
     }
-
-    getCategory(){
-        return this.#category.getCategoryName();
+  
+    getCategory() {
+      return this.#category.getCategoryName();
     }
-
-    getBookIsbn(){
-        return this.#isbn;
+  
+    getBookIsbn() {
+      return this.#isbn;
     }
-
-    getBookPrice(){
-        return this.#price;
+  
+    getBookPrice() {
+      return this.#price;
     }
-
-    getBookDescription(){
-        return this.#description;
+  
+    getBookDescription() {
+      return this.#description;
     }
-
-    getBookCheckOutStatus(){
-        return this.#is_checked_out;
+  
+    getBookCheckOutStatus() {
+      return this.#is_checked_out;
     }
-    //setteriai
-    setBookTitle(newTitle){
+  
+    // Setteriai
+    setBookTitle(newTitle) {
+      if (newTitle) {
         this.#title = newTitle;
+      } else {
+        throw new Error("Aprašymas negali būti tuščias");
+      }
     }
-
-    setBookPrice(newPrice){
-        if (newPrice >=0){
-            this.#price = newPrice;
-        } else {
-            throw new Error('kaina negali būti mažesnė už 0')
-        }
+  
+    setBookPrice(newPrice) {
+      if (newPrice >= 0) {
+        this.#price = newPrice;
+      } else {
+        throw new Error("Kaina negali būti mažesnė už 0");
+      }
     }
-    setDescription(newDescription){
+  
+    setDescription(newDescription) {
+      if (newDescription) {
         this.#description = newDescription;
+      } else {
+        throw new Error("Aprašymas negali būti tuščias");
+      }
     }
-    //methodai
-    checkOut(){
-        this.#is_checked_out = true;
+  
+    setCategory(newCategory) {
+      if (newCategory) {
+        this.#category = newCategory;
+      } else {
+        throw new Error("Kategorija neparinkta");
+      }
     }
-
-    checkIn(){
-        this.#is_checked_out = false;
+  
+    setIsbnNumber(newIsbn) {
+      if (!/^\d{13}$/.test(newIsbn)) {
+        throw new Error("ISBN turi būti 13 skaitmenų skaičius.");
+      }
+  
+      if (Book.existingIsbns.has(newIsbn)) {
+        throw new Error("Šis ISBN jau egzistuoja!");
+      }
+  
+      //sena Isbn istrinti
+      Book.existingIsbns.delete(this.#isbn);
+  
+      this.#isbn = newIsbn;
+      Book.existingIsbns.add(newIsbn);
     }
-
-    checkAvailability(){
-        if (this.#is_checked_out = true){
-            this.availability = 'Knyga yra paimta'
-        } else {
-            this.availability = 'Knyga yra bibliotekoje'
-        }
+  
+    // Methodai
+    checkOut() {
+      this.#is_checked_out = true;
     }
-    //info getteris
-    getInfo(){
-        return `Knygos pavadinimas: ${this.#title},
-                knygos autorius: ${this.#author},
-                knygos žanras: ${this.#category.getCategoryName()},
-                knygos kaina: ${this.#price},
-                knygos aprasymas: ${this.#description},
-                ar knyga pasiimta? ${this.availability}
-        `
+  
+    checkIn() {
+      this.#is_checked_out = false;
     }
-
-}
-export default Book;
+  
+    checkAvailability() {
+      this.availability = this.#is_checked_out ? "Knyga yra paimta" : "Knyga yra bibliotekoje";
+    }
+  
+    // Info getteris
+    getInfo() {
+      return `Knygos pavadinimas: ${this.#title},
+                  knygos autorius: ${this.#author},
+                  knygos žanras: ${this.#category.getCategoryName()},
+                  knygos kaina: ${this.#price},
+                  knygos aprašymas: ${this.#description},
+                  ar knyga pasiimta? ${this.availability}`;
+    }
+  }
+  
+  export default Book;
+  
