@@ -39,6 +39,7 @@ class Book {
     this.#price = bookPrice;
     this.#description = bookDesc;
     this.#is_checked_out = is_checked_out;
+    this.availability = this.#is_checked_out ? "Knyga yra paimta" : "Knyga yra bibliotekoje";
   }
 
   // Getteriai
@@ -126,16 +127,16 @@ class Book {
   // Methodai
   checkOut() {
     this.#is_checked_out = true;
+    this.availability = "Knyga yra paimta";
   }
 
   checkIn() {
     this.#is_checked_out = false;
+    this.availability = "Knyga yra bibliotekoje";
   }
 
   checkAvailability() {
-    this.availability = this.#is_checked_out
-      ? "Knyga yra paimta"
-      : "Knyga yra bibliotekoje";
+    return this.#is_checked_out ? "Knyga yra paimta" : "Knyga yra bibliotekoje";
   }
 
   // Info getteris
@@ -145,7 +146,7 @@ class Book {
                   knygos žanras: ${this.#category.getCategoryName()},
                   knygos kaina: ${this.#price},
                   knygos aprašymas: ${this.#description},
-                  ar knyga pasiimta? ${this.availability}`;
+                  ar knyga pasiimta? ${this.checkAvailability}`;
   }
 }
 
