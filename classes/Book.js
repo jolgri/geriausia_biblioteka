@@ -1,5 +1,5 @@
 class Book {
-    static bookId = 0;
+    static bookId = 1;
     #title;
     #author;
     #isbn;
