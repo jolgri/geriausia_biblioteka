@@ -1,3 +1,4 @@
+
 import Category from "./classes/Category.js";
 import Book from "./classes/Book.js";
 
@@ -31,6 +32,7 @@ console.log(trileriuKategorija.getBooksByPriceRange(15, 20)); // isvedam kokios 
 siauboKategorija.setCategoryName('Komedija');
 
 console.log(siauboKategorija);
+
 
 
 
