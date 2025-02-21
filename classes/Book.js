@@ -60,7 +60,7 @@ class Book {
 
   // Getteriai
   getBookId() {
-    return this.bookId;
+    return Book.bookId;
   }
 
   getBookTitle() {
@@ -164,7 +164,8 @@ class Book {
                   knygos žanras: ${this.#category.getCategoryName()},
                   knygos kaina: ${this.#price},
                   knygos aprašymas: ${this.#description},
-                  ar knyga pasiimta? ${this.checkAvailability}`;
+                  ar knyga pasiimta? ${this.checkAvailability},
+                  knygos id : ${Book.bookId}`;
   }
 }
 
