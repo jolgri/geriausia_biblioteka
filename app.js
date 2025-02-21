@@ -15,8 +15,6 @@ console.log(newBook2);
 
 const trileriuKategorija = new Category('Trileriai'); // sukuriam nauja kategorija
 const siauboKategorija = new Category('Siaubo'); // sukuriam nauja kategorija
-console.log(trileriuKategorija);  
-console.log(siauboKategorija);
 
 siauboKategorija.addBook(newBook);
 trileriuKategorija.addBook(newBook2); // pridedam knyga prie sukurtos kategorijos
@@ -32,3 +30,10 @@ console.log(trileriuKategorija.getBooksByPriceRange(15, 20)); // isvedam kokios 
 siauboKategorija.setCategoryName('Komedija');
 
 console.log(siauboKategorija);
+
+const library = new Library();
+
+library.addCategory(trileriuKategorija);
+library.addCategory(siauboKategorija);
+
+console.log(library);
