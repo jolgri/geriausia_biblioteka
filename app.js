@@ -37,3 +37,6 @@ library.addCategory(trileriuKategorija);
 library.addCategory(siauboKategorija);
 
 console.log(library);
+
+const ivertinimas1 = new Rating ('1', 'GBS001', 5, 'Gera skaityti tokią knygą');
+console.log(ivertinimas1.getRating());
