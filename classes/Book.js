@@ -1,5 +1,5 @@
 class Book {
-    #id;
+    static bookId = 0;
     #title;
     #author;
     #isbn;
@@ -9,8 +9,8 @@ class Book {
     availability;
     #category;
     //konstruktorius
-    constructor(bookId, bookTitle, bookAuthor, bookCategory, bookIsbn, bookPrice, bookDesc, is_checked_out){
-        this.#id = bookId;
+    constructor(bookTitle, bookAuthor, bookCategory, bookIsbn, bookPrice, bookDesc, is_checked_out){
+        Book.bookId++;;
         this.#title = bookTitle;
         this.#author = bookAuthor;
         this.#category = bookCategory;
@@ -22,7 +22,7 @@ class Book {
 
     //getteriai
     getBookId(){
-        return this.#id;
+        return this.bookId;
     }
 
     getBookTitle(){
