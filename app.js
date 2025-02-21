@@ -1,5 +1,6 @@
 import Category from "./classes/Category.js";
 import Book from "./classes/Book.js";
+import Library from "./classes/Library.js";
 
 
 const newBook = new Book('Ledynmetis', 'Jonas', 'Siaubo', 1234567891014, 17.88, 'Gera knyga', false);
