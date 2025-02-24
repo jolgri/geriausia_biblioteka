@@ -9,7 +9,7 @@ export default class Rating {
 
 
     //Constructor
-    constructor (bookId, readerId, rating, comment) {
+    constructor(bookId, readerId, rating, comment) {
         this.#id = Rating.#counter++;
         this.#bookId = bookId;
         this.#readerId = readerId; 

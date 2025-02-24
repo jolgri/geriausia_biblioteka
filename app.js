@@ -2,7 +2,7 @@ import Category from "./classes/Category.js";
 import Book from "./classes/Book.js";
 import Library from "./classes/Library.js";
 import Rating from "./classes/Rating.js";
-import Reader from "../users/Reader.js";
+import Reader from "./classes/Reader.js";
 
 
 const newBook = new Book('Ledynmetis', 'Jonas', 'Siaubo', 1234567891014, 17.88, 'Gera knyga', false);
@@ -39,12 +39,3 @@ library.addCategory(trileriuKategorija);
 library.addCategory(siauboKategorija);
 
 console.log(library);
-
-const ivertinimas1 = new Rating ('1', 'GBS001', 5, 'Gera skaityti tokią knygą');
-console.log(ivertinimas1);
-
-const skaitytojas1 = new Reader('Jonas', 'jonas@jonaitis.com', 1234);
-console.log(skaitytojas1);
-
-skaitytojas1.borrowBook();
-console.log(skaitytojas1.getBorrowedBooks);
