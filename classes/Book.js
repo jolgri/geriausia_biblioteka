@@ -29,6 +29,20 @@ class Book {
       throw new Error("ISBN turi būti 13 skaitmenų sveikasis skaičius.");
     }
 
+    //zemiau esantis if'ai uztikrina kad knyga tures Autoriu, Categorija ir Pavadinima bei visi sie bus stringai, ne skaiciai ar dar koks netinkamo tipo dalykas
+
+    if (bookAuthor.trim().length === 0 || typeof bookAuthor !== "string") {
+      throw new Error("Autorius privalo egzistuoti");
+    }
+
+    if (bookCategory.trim().length === 0 || typeof bookCategory !== "string") {
+      throw new Error("Kategorija privalo buti");
+    }
+
+    if (bookTitle.trim().length === 0 || typeof bookTitle !== "string") {
+      throw new Error("Pavadinimas negali būti tuščias.");
+    }
+
     this.#isbn = bookIsbn;
     Book.existingIsbns.add(bookIsbn); // Add ISBN to unique set
 
@@ -39,6 +53,9 @@ class Book {
     this.#price = bookPrice;
     this.#description = bookDesc;
     this.#is_checked_out = is_checked_out;
+    this.availability = this.#is_checked_out
+      ? "Knyga yra paimta"
+      : "Knyga yra bibliotekoje";
   }
 
   // Getteriai
@@ -76,34 +93,36 @@ class Book {
 
   // Setteriai
   setBookTitle(newTitle) {
-    if (newTitle) {
-      this.#title = newTitle;
-    } else {
-      throw new Error("Aprašymas negali būti tuščias");
+    if (newTitle.trim().length === 0 || typeof newTitle !== "string") {
+      throw new Error("Pavadinimas negali būti tuščias.");
     }
+    this.#title = newTitle;
   }
 
   setBookPrice(newPrice) {
-    if (newPrice >= 0) {
-      this.#price = newPrice;
-    } else {
+    if (newPrice === 0 || typeof newPrice !== "number") {
       throw new Error("Kaina negali būti mažesnė už 0");
+    } else {
+      this.#price = newPrice;
     }
   }
 
   setDescription(newDescription) {
-    if (newDescription) {
-      this.#description = newDescription;
-    } else {
+    if (
+      newDescription.trim().length === 0 ||
+      typeof newDescription !== "string"
+    ) {
       throw new Error("Aprašymas negali būti tuščias");
+    } else {
+      this.#description = newDescription;
     }
   }
 
   setCategory(newCategory) {
-    if (newCategory) {
-      this.#category = newCategory;
-    } else {
+    if (newCategory.trim().length === 0 || typeof newCategory !== "string") {
       throw new Error("Kategorija neparinkta");
+    } else {
+      this.#category = newCategory;
     }
   }
 
@@ -126,16 +145,16 @@ class Book {
   // Methodai
   checkOut() {
     this.#is_checked_out = true;
+    this.availability = "Knyga yra paimta";
   }
 
   checkIn() {
     this.#is_checked_out = false;
+    this.availability = "Knyga yra bibliotekoje";
   }
 
   checkAvailability() {
-    this.availability = this.#is_checked_out
-      ? "Knyga yra paimta"
-      : "Knyga yra bibliotekoje";
+    return this.#is_checked_out ? "Knyga yra paimta" : "Knyga yra bibliotekoje";
   }
 
   // Info getteris
@@ -145,7 +164,7 @@ class Book {
                   knygos žanras: ${this.#category.getCategoryName()},
                   knygos kaina: ${this.#price},
                   knygos aprašymas: ${this.#description},
-                  ar knyga pasiimta? ${this.availability}`;
+                  ar knyga pasiimta? ${this.checkAvailability}`;
   }
 }
 
