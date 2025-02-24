@@ -2,7 +2,7 @@ import Category from "./classes/Category.js";
 import Book from "./classes/Book.js";
 import Library from "./classes/Library.js";
 import Rating from "./classes/Rating.js";
-import Reader from "./classes/Reader.js";
+import Reader from "./users/Reader.js";
 
 
 const newBook = new Book('Ledynmetis', 'Jonas', 'Siaubo', 1234567891014, 17.88, 'Gera knyga', false);
