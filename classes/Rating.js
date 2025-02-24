@@ -24,7 +24,7 @@ export default class Rating {
 
 
     //Getter'iai
-    getId() {
+    getId(){
         return this.#id;
     }
 
