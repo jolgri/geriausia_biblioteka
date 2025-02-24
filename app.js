@@ -39,3 +39,12 @@ library.addCategory(trileriuKategorija);
 library.addCategory(siauboKategorija);
 
 console.log(library);
+
+const ivertinimas1 = new Rating ('1', 'GBS001', 5, 'Gera skaityti tokią knygą');
+console.log(ivertinimas1);
+
+const skaitytojas1 = new Reader('Jonas', 'jonas@jonaitis.com', 1234);
+console.log(skaitytojas1);
+
+skaitytojas1.borrowBook();
+console.log(skaitytojas1.getBorrowedBooks);
