@@ -20,6 +20,7 @@ class Book {
     bookPrice,
     bookDesc,
     is_checked_out
+    
   ) {
     if (Book.existingIsbns.has(bookIsbn)) {
       throw new Error("Šis ISBN jau egzistuoja!");

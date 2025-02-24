@@ -55,4 +55,8 @@ class Category {
 
 }
 
+<<<<<<< HEAD
 export default Category;
+=======
+export default Category;
+>>>>>>> 6942b060584488da40dca106846164518fa484a0
