@@ -20,7 +20,6 @@ class Book {
     bookPrice,
     bookDesc,
     is_checked_out
-    
   ) {
     if (Book.existingIsbns.has(bookIsbn)) {
       throw new Error("Šis ISBN jau egzistuoja!");
@@ -54,7 +53,6 @@ class Book {
     this.#price = bookPrice;
     this.#description = bookDesc;
     this.#is_checked_out = is_checked_out;
-    this.availability = this.#is_checked_out ? "Knyga yra paimta" : "Knyga yra bibliotekoje";
     this.availability = this.#is_checked_out
       ? "Knyga yra paimta"
       : "Knyga yra bibliotekoje";
@@ -95,18 +93,6 @@ class Book {
 
   // Setteriai
   setBookTitle(newTitle) {
-    if (newTitle) {
-      this.#title = newTitle;
-    } else {
-      throw new Error("Aprašymas negali būti tuščias");
-    }
-  }
-
-  setBookPrice(newPrice) {
-    if (newPrice >= 0) {
-      this.#price = newPrice;
-    } else {
-      throw new Error("Kaina negali būti mažesnė už 0");
     if (newTitle.trim().length === 0 || typeof newTitle !== "string") {
       throw new Error("Pavadinimas negali būti tuščias.");
     }
@@ -122,10 +108,6 @@ class Book {
   }
 
   setDescription(newDescription) {
-    if (newDescription) {
-      this.#description = newDescription;
-    } else {
-      throw new Error("Aprašymas negali būti tuščias");
     if (
       newDescription.trim().length === 0 ||
       typeof newDescription !== "string"
@@ -137,10 +119,6 @@ class Book {
   }
 
   setCategory(newCategory) {
-    if (newCategory) {
-      this.#category = newCategory;
-    } else {
-      throw new Error("Kategorija neparinkta");
     if (newCategory.trim().length === 0 || typeof newCategory !== "string") {
       throw new Error("Kategorija neparinkta");
     } else {

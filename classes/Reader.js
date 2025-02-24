@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import Book from "../classes/Book.js";
 
 class Reader {
@@ -50,7 +49,6 @@ class Reader {
   }
 }
 
-=======
 import Book from "./Book.js";
 class Reader {
 
@@ -107,5 +105,4 @@ class Reader {
 
 
 
->>>>>>> 6942b060584488da40dca106846164518fa484a0
 export default Reader;
