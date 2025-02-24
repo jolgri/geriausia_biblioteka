@@ -28,7 +28,7 @@ class Book {
     if (!/^\d{13}$/.test(bookIsbn)) {
       throw new Error("ISBN turi būti 13 skaitmenų sveikasis skaičius.");
     }
-    
+
     //zemiau esantis if'ai uztikrina kad knyga tures Autoriu, Categorija ir Pavadinima bei visi sie bus stringai, ne skaiciai ar dar koks netinkamo tipo dalykas
 
     if (bookAuthor.trim().length === 0 || typeof bookAuthor !== "string") {
