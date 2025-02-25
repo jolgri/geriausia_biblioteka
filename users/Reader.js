@@ -3,6 +3,7 @@ import Book from "../classes/Book.js";
 class Reader {
   static readerCounter = 1;
 
+  #id
   #readerName;
   #reader_id;
   #readerEmail; //TODO
@@ -11,10 +12,11 @@ class Reader {
   #borrowed_books = [];
 
   constructor(name, email, pincode) {
+    this.#id = Reader.readerCounter++; //pagal Simonos siandienos koda pakoreguotas
     this.#readerName = name;
     this.#readerEmail = email;
     this.#readerPincode = pincode;
-    this.#reader_id = "GBS " + Reader.readerCounter++;
+    this.#reader_id = "GBS " + this.#id;
   }
 
   getName() {
