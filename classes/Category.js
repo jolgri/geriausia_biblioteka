@@ -1,7 +1,7 @@
 import Book from "./Book.js";
 
 class Category {
-    static counter = 1;
+    static counter = 1;//nuo nulio buti irgi tesiginai bet whatever
 
     #id;
     #categoryName;
