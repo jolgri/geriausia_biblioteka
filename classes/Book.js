@@ -1,7 +1,8 @@
 class Book {
-  static bookId = 1;
+  static bookCounter = 0;
   static existingIsbns = new Set();
 
+  #bookId; //pataisiau bookId pagal Simonos siandienos pamoka
   #title;
   #author;
   #isbn;
@@ -46,7 +47,8 @@ class Book {
     this.#isbn = bookIsbn;
     Book.existingIsbns.add(bookIsbn); // Add ISBN to unique set
 
-    Book.bookId++;
+    Book.bookCounter++;
+    this.#bookId = Book.bookCounter;
     this.#title = bookTitle;
     this.#author = bookAuthor;
     this.#category = bookCategory;
@@ -165,7 +167,7 @@ class Book {
                   knygos kaina: ${this.#price},
                   knygos aprašymas: ${this.#description},
                   ar knyga pasiimta? ${this.checkAvailability},
-                  knygos id : ${Book.bookId}`;
+                  knygos id : ${this.#bookId}`;
   }
 }
 
