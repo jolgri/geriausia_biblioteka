@@ -1,7 +1,8 @@
 class Book {
-  static bookId = 1;
+  static bookCounter = 0;
   static existingIsbns = new Set();
 
+  #bookId; //pataisiau bookId pagal Simonos siandienos pamoka
   #title;
   #author;
   #isbn;
@@ -46,7 +47,8 @@ class Book {
     this.#isbn = bookIsbn;
     Book.existingIsbns.add(bookIsbn); // Add ISBN to unique set
 
-    Book.bookId++;
+    Book.bookCounter++;
+    this.#bookId = Book.bookCounter;
     this.#title = bookTitle;
     this.#author = bookAuthor;
     this.#category = bookCategory;
@@ -60,7 +62,7 @@ class Book {
 
   // Getteriai
   getBookId() {
-    return this.bookId;
+    return Book.bookId;
   }
 
   getBookTitle() {
@@ -164,7 +166,8 @@ class Book {
                   knygos žanras: ${this.#category.getCategoryName()},
                   knygos kaina: ${this.#price},
                   knygos aprašymas: ${this.#description},
-                  ar knyga pasiimta? ${this.checkAvailability}`;
+                  ar knyga pasiimta? ${this.checkAvailability},
+                  knygos id : ${this.#bookId}`;
   }
 }
 
