@@ -34,7 +34,7 @@ class Category {
     getBooksByPriceRange(minPrice, maxPrice) {
         return this.#books.filter(book => book.getBookPrice() > minPrice && book.getBookPrice() < maxPrice);
     }
-
+    
     // setteriai
 
     addBook(book) {
