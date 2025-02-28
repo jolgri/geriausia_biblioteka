@@ -1,3 +1,4 @@
+import Category from "./Category.js";
 class Book {
   static bookCounter = 0;
   static existingIsbns = new Set();
@@ -36,9 +37,10 @@ class Book {
       throw new Error("Autorius privalo egzistuoti");
     }
 
-    if (bookCategory.trim().length === 0 || typeof bookCategory !== "string") {
-      throw new Error("Kategorija privalo buti");
-    }
+    if (!(bookCategory instanceof Category)) {
+      throw new Error("Kategorija turi būti Category klasės objektas.");
+  }
+  
 
     if (bookTitle.trim().length === 0 || typeof bookTitle !== "string") {
       throw new Error("Pavadinimas negali būti tuščias.");
