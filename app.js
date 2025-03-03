@@ -177,8 +177,6 @@ function displayAddBookForm() {
   
 //-------------HTML turinio kurimas-> KNYGU SARASAS------------------
 
-//-------------HTML turinio kurimas-> KNYGU SARASAS------------------
-
 const showBooksList = document.getElementById("showBooksList");
 
 showBooksList.addEventListener("click", () => mainLibrary.generateBookList()); 
