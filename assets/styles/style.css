@@ -29,3 +29,56 @@
 h2 {
     margin: 20px;
 }
+
+.menu-btn {
+    padding: 20px 0;
+    cursor: pointer;
+    border-bottom: solid 1px white;
+}
+
+.menu-btn:hover {
+    color: greenyellow;
+}
+
+.main {
+    width: calc(100% - 200px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addForm {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.addForm input, .addForm select  {
+    margin-bottom: 10px;
+    height: 30px;
+    font-size: 18px;
+}
+
+.btn {
+    height: 50px;
+    font-family: Poppins, 'serif';
+    font-size: 18px;
+    background-color: lawngreen;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+   
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+   
+  th {
+    background-color: rgba(172, 255, 47, 0.444);
+  }
+  

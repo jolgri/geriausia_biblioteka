@@ -1,4 +1,5 @@
 import Book from "./Book.js";
+import Library from "./Library.js";
 
 class Category {
     static counter = 1;
@@ -7,10 +8,16 @@ class Category {
     #categoryName;
     #books;
 
-    constructor(categoryName) {
+    constructor(categoryName, library) {
         this.#id = Category.counter++;
         this.#categoryName = categoryName;
         this.#books = []; // Knygų masyvas
+
+        if (library instanceof Library) {
+            library.addCategory(this);
+        } else {
+            throw new Error("Pateikas parametras nepriklauso library klasei")
+        }
     }
 
     // getteriai
