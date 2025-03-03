@@ -1,3 +1,5 @@
+import Category from "./Category.js";
+
 class Book {
   static bookCounter = 0;
   static existingIsbns = new Set();
@@ -22,6 +24,7 @@ class Book {
     bookDesc,
     is_checked_out
   ) {
+    //visi zemiau esantis ifai veliau bus perkelti i BookValidator klase 
     if (Book.existingIsbns.has(bookIsbn)) {
       throw new Error("Šis ISBN jau egzistuoja!");
     }
@@ -32,15 +35,15 @@ class Book {
     
     //zemiau esantis if'ai uztikrina kad knyga tures Autoriu, Categorija ir Pavadinima bei visi sie bus stringai, ne skaiciai ar dar koks netinkamo tipo dalykas
 
-    if (bookAuthor.trim().length === 0 || typeof bookAuthor !== "string") {
+    if (!bookAuthor.trim().length === 0 || typeof bookAuthor !== "string") {
       throw new Error("Autorius privalo egzistuoti");
     }
 
-    if (bookCategory.trim().length === 0 || typeof bookCategory !== "string") {
+    if (!(bookCategory instanceof Category)) {
       throw new Error("Kategorija privalo buti");
     }
 
-    if (bookTitle.trim().length === 0 || typeof bookTitle !== "string") {
+    if (!bookTitle.trim().length === 0 || typeof bookTitle !== "string") {
       throw new Error("Pavadinimas negali būti tuščias.");
     }
 
