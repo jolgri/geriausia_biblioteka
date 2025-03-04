@@ -9,16 +9,26 @@
     <script type="module" src="app.js" defer></script>
 </head>
 <body>
+    <nav class="nav">
+        <button class="hamburger">☰</button>
+        <div id="addBookOption" class="menu-btn">Pridėti knygą</div>
+        <div id="showBooksList" class="menu-btn">Knygų sąrašas</div>
+        <div id="addCategoryOption" class="menu-btn">Sukurti kategoriją</div>
+        <div id="showCategoryList" class="menu-btn">Kategorijų sąrašas</div>
+    </nav>
+
+    <div class="sidebar">
+        <button class="close-btn">×</button>
+        <div id="addBookOptionSidebar" class="menu-btn">Pridėti knygą</div>
+        <div id="showBooksListSidebar" class="menu-btn">Knygų sąrašas</div>
+        <div id="addCategoryOptionSidebar" class="menu-btn">Sukurti kategoriją</div>
+        <div id="showCategoryListSidebar" class="menu-btn">Kategorijų sąrašas</div>
+    </div>
+
     <div class="screen">
         <div class="wrapper">
             <div class="wrapper-content">
-                <div class="logo">GB</div> <!-- Logo added here -->
-                <nav class="nav">
-                    <div id="addBookOption" class="menu-btn">Pridėti knygą</div>
-                    <div id="showBooksList" class="menu-btn">Knygų sąrašas</div>
-                    <div id="addCategoryOption" class="menu-btn">Sukurti kategoriją</div>
-                    <div id="showCategoryList" class="menu-btn">Kategorijų sąrašas</div>
-                </nav>
+                <div class="logo">GB</div>
             </div>
             <main class="main">
                 <div id="content">
@@ -27,5 +37,6 @@
             </main>
         </div>
     </div>
+<script src="./assets/hamburger.js"></script>
 </body>
 </html>
