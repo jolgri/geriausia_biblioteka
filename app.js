@@ -6,7 +6,6 @@ import Reader from "./users/Reader.js";
 
 const mainLibrary = new Library();
 const categories = [];
-const books = [];
 const trileriuKategorija = new Category("Trileriai", mainLibrary); 
 const siauboKategorija = new Category("Siaubo", mainLibrary); 
 const komedijuKategorija = new Category("Komedija", mainLibrary); 

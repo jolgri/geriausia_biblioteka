@@ -39,13 +39,13 @@ class Library {
       htmlContent += `<tr><td colspan="7" style="text-align:center;">Nėra kategorijų arba knygų!</td></tr>`;
     } else {
       this.categories.forEach(category => {
-        const books = category.getBooks(); // Get the books for this category
+        const books = category.getBooks();
   
         if (books.length === 0) {
           htmlContent += `<tr><td colspan="7" style="text-align:center;">Šioje kategorijoje nėra knygų.</td></tr>`;
         } else {
           books.forEach(book => {
-            const info = book.getInfo(); // Get book info
+            const info = book.getInfo();
   
             htmlContent += `
             <tr>
@@ -64,7 +64,6 @@ class Library {
   
     htmlContent += `</tbody></table>`;
   
-    // Update the HTML content dynamically
     document.getElementById("content").innerHTML = htmlContent;
   }
 }
