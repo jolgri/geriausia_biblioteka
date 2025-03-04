@@ -1,23 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geriausia biblioteka</title>
+
     <link rel="stylesheet" href="./assets/styles/style.css">
     <script type="module" src="app.js" defer></script>
 </head>
 
 <body>
-    <h1> Mūsų geriausia biblioteka</h1>
-    <p>Biblioteką kuria:</p>
-    <p> Edgaras, Aurelijus, Donatas, Rokas, Meilė ir Jolanta</p>
-    <p> 2025-02-21d:</p>
-    <p> Sukurti veikiantys: Books.js, Category.js, Library.js, Rating.js ir bendra struktūra.
-    </p>
-    <p> Ačiū visiems, labai.</p>
-    </p>
+    <div class="screen">
+        <div class="wrapper">
+            <div class="wrapper-content">
+                <nav class="nav">
+                    <div id="addBookOption" class="menu-btn">Pridėti knygą</div>
+                    <div id="showBooksList" class="menu-btn">Knygų sąrašas</div>
+                    <div id="addCategoryOption" class="menu-btn">Sukurti kategoriją</div>
+                    <div id="showCategoryList" class="menu-btn">Kategorijų sąrašas</div>
+                </nav>
+            </div>
+            <main class="main">
+                <div id="content">
+                    <!-- Čia bus dinamiškai įkeliama informacija -->
+                </div>
+            </main>
+        </div>
+    </div>
 </body>
 
 </html>

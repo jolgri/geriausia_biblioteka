@@ -1,3 +1,5 @@
+import Library from "./Library.js";
+
 class Book {
   static bookCounter = 0;
   static existingIsbns = new Set();
@@ -21,26 +23,16 @@ class Book {
     bookPrice,
     bookDesc,
     is_checked_out
-  ) {
-    if (Book.existingIsbns.has(bookIsbn)) {
-      throw new Error("Šis ISBN jau egzistuoja!");
-    }
 
-    if (!/^\d{13}$/.test(bookIsbn)) {
-      throw new Error("ISBN turi būti 13 skaitmenų sveikasis skaičius.");
-    }
-    
+  ) {
+    //visi zemiau esantis ifai veliau bus perkelti i BookValidator klase 
     //zemiau esantis if'ai uztikrina kad knyga tures Autoriu, Categorija ir Pavadinima bei visi sie bus stringai, ne skaiciai ar dar koks netinkamo tipo dalykas
 
-    if (bookAuthor.trim().length === 0 || typeof bookAuthor !== "string") {
+    if (!bookAuthor.trim().length === 0 || typeof bookAuthor !== "string") {
       throw new Error("Autorius privalo egzistuoti");
     }
 
-    if (bookCategory.trim().length === 0 || typeof bookCategory !== "string") {
-      throw new Error("Kategorija privalo buti");
-    }
-
-    if (bookTitle.trim().length === 0 || typeof bookTitle !== "string") {
+    if (!bookTitle.trim().length === 0 || typeof bookTitle !== "string") {
       throw new Error("Pavadinimas negali būti tuščias.");
     }
 
@@ -126,22 +118,6 @@ class Book {
     } else {
       this.#category = newCategory;
     }
-  }
-
-  setIsbnNumber(newIsbn) {
-    if (!/^\d{13}$/.test(newIsbn)) {
-      throw new Error("ISBN turi būti 13 skaitmenų skaičius.");
-    }
-
-    if (Book.existingIsbns.has(newIsbn)) {
-      throw new Error("Šis ISBN jau egzistuoja!");
-    }
-
-    //sena Isbn istrinti
-    Book.existingIsbns.delete(this.#isbn);
-
-    this.#isbn = newIsbn;
-    Book.existingIsbns.add(newIsbn);
   }
 
   // Methodai
