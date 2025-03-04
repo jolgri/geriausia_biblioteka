@@ -30,6 +30,17 @@ body {
     overflow: hidden; /* Contain inner elements */
 }
 
+/* Logo styling */
+.logo {
+    font-size: 2.5rem; /* Large size for prominence */
+    font-weight: 600; /* Bold for emphasis */
+    color: #27ae60; /* Match the theme’s green */
+    text-align: center;
+    padding: 20px 0; /* Vertical spacing */
+    background-color: #34495e; /* Same as nav background */
+    border-bottom: 2px solid #27ae60; /* Subtle green underline */
+}
+
 /* Navigation styling */
 .nav {
     display: flex;
