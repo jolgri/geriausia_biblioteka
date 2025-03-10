@@ -52,9 +52,9 @@ class Library {
         return;
       }
   
-      book.setAvailability("Knyga yra paimta");
-  
       reader.borrowBook(book);
+
+      book.setAvailability(false);
       console.log(`Skaitytojas ${reader.getName()} pasiskolino knygą: ${book.getBookTitle()}`);
     } else {
       console.log("Knyga negalima pasiskolinti (jau paimta).");
