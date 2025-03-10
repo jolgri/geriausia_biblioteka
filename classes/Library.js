@@ -154,7 +154,7 @@ class Library {
                 <td>${category.getCategoryName()}</td>
                 <td>${book.getBookTitle()}</td>
                 <td>${book.getBookAuthor()}</td>
-                <td>${book.getBookPrice().toFixed(2)} EUR</td>s
+                <td>${book.getBookPrice().toFixed(2)} EUR</td>
                 <td>${book.getBookDescription()}</td>
                 <td>${book.checkAvailability() ? 'Pasiekiama' : 'Nepasiekiama'}</td>
                 <td>${book.getBookIsbn()}</td>
