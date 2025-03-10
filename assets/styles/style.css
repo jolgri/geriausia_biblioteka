@@ -205,6 +205,66 @@ h2 {
     color: #27ae60;
 }
 
+/* Modal Styling */
+.modal {
+    padding: 20px;
+    background-color: rgba(44, 62, 80, 0.9); /* Matches the background of the wrapper */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Same shadow effect as the wrapper */
+    width: 100%;
+    max-width: 400px; /* Limit the modal width */
+    margin: 0 auto; /* Center the modal */
+}
+
+.modal h3 {
+    color: #27ae60; /* Match the heading color with the theme */
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+/* Modal Buttons */
+button {
+    padding: 12px 25px; /* Larger button size to match existing buttons */
+    margin-top: 20px;
+    font-size: 1.1rem; /* Consistent font size */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    background-color: #27ae60; /* Button color matches the theme */
+    color: white;
+    width: 100%; /* Make buttons full-width */
+}
+
+button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+button:hover:not([disabled]) {
+    background-color: #219653; /* Slightly darker shade on hover */
+    transform: translateY(-2px); /* Slight elevation effect */
+}
+
+/* Select box inside modal */
+select {
+    padding: 12px 10px;
+    width: 100%;
+    margin-top: 10px;
+    background-color: #ecf0f1; /* Matches the background of form elements */
+    color: #2c3e50; /* Text color inside select */
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+    transition: box-shadow 0.3s ease;
+}
+
+select:focus {
+    outline: none;
+    box-shadow: 0 0 5px #27ae60;
+}
+
+
 /* Media Query for Mobile */
 @media screen and (max-width: 768px) {
     .hamburger {

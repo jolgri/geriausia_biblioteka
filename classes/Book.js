@@ -1,10 +1,8 @@
-import Library from "./Library.js";
-
 class Book {
   static bookCounter = 0;
   static existingIsbns = new Set();
 
-  #bookId; //pataisiau bookId pagal Simonos siandienos pamoka
+  #bookId;
   #title;
   #author;
   #isbn;
@@ -14,7 +12,6 @@ class Book {
   availability;
   #category;
 
-  // Konstruktorius
   constructor(
     bookTitle,
     bookAuthor,
@@ -23,21 +20,21 @@ class Book {
     bookPrice,
     bookDesc,
     is_checked_out
-
   ) {
-    //visi zemiau esantis ifai veliau bus perkelti i BookValidator klase 
-    //zemiau esantis if'ai uztikrina kad knyga tures Autoriu, Categorija ir Pavadinima bei visi sie bus stringai, ne skaiciai ar dar koks netinkamo tipo dalykas
-
-    if (!bookAuthor.trim().length === 0 || typeof bookAuthor !== "string") {
+    if (!bookAuthor || typeof bookAuthor !== "string") {
       throw new Error("Autorius privalo egzistuoti");
     }
 
-    if (!bookTitle.trim().length === 0 || typeof bookTitle !== "string") {
+    if (!bookTitle || typeof bookTitle !== "string") {
       throw new Error("Pavadinimas negali būti tuščias.");
     }
 
-    this.#isbn = bookIsbn;
-    Book.existingIsbns.add(bookIsbn); // Add ISBN to unique set
+    if (Book.existingIsbns.has(bookIsbn)) {
+      throw new Error("Toks ISBN jau egzistuoja");
+    }
+    
+    this.#isbn = bookIsbn;  // Assign the ISBN here
+    Book.existingIsbns.add(this.#isbn);  // Add the ISBN after assigning it to this.#isbn
 
     Book.bookCounter++;
     this.#bookId = Book.bookCounter;
@@ -54,7 +51,7 @@ class Book {
 
   // Getteriai
   getBookId() {
-    return Book.bookId;
+    return this.#bookId;
   }
 
   getBookTitle() {
@@ -66,7 +63,7 @@ class Book {
   }
 
   getCategory() {
-    return this.#category.getCategoryName();
+    return this.#category.getCategoryName ? this.#category.getCategoryName() : this.#category;
   }
 
   getBookIsbn() {
@@ -87,37 +84,31 @@ class Book {
 
   // Setteriai
   setBookTitle(newTitle) {
-    if (newTitle.trim().length === 0 || typeof newTitle !== "string") {
+    if (!newTitle || typeof newTitle !== "string") {
       throw new Error("Pavadinimas negali būti tuščias.");
     }
     this.#title = newTitle;
   }
 
   setBookPrice(newPrice) {
-    if (newPrice === 0 || typeof newPrice !== "number") {
+    if (newPrice <= 0 || typeof newPrice !== "number") {
       throw new Error("Kaina negali būti mažesnė už 0");
-    } else {
-      this.#price = newPrice;
     }
+    this.#price = newPrice;
   }
 
   setDescription(newDescription) {
-    if (
-      newDescription.trim().length === 0 ||
-      typeof newDescription !== "string"
-    ) {
+    if (!newDescription || typeof newDescription !== "string") {
       throw new Error("Aprašymas negali būti tuščias");
-    } else {
-      this.#description = newDescription;
     }
+    this.#description = newDescription;
   }
 
   setCategory(newCategory) {
-    if (newCategory.trim().length === 0 || typeof newCategory !== "string") {
+    if (!newCategory || typeof newCategory !== "string") {
       throw new Error("Kategorija neparinkta");
-    } else {
-      this.#category = newCategory;
     }
+    this.#category = newCategory;
   }
 
   // Methodai
@@ -132,18 +123,22 @@ class Book {
   }
 
   checkAvailability() {
-    return this.#is_checked_out ? "Knyga yra paimta" : "Knyga yra bibliotekoje";
+    return this.availability; // Return the string status
+  }
+
+  setAvailability(status) {
+    this.availability = status;
   }
 
   // Info getteris
   getInfo() {
     return `Knygos pavadinimas: ${this.#title},
-                  knygos autorius: ${this.#author},
-                  knygos žanras: ${this.#category.getCategoryName()},
-                  knygos kaina: ${this.#price},
-                  knygos aprašymas: ${this.#description},
-                  ar knyga pasiimta? ${this.checkAvailability},
-                  knygos id : ${this.#bookId}`;
+            knygos autorius: ${this.#author},
+            knygos žanras: ${this.getCategory()},
+            knygos kaina: ${this.#price},
+            knygos aprašymas: ${this.#description},
+            ar knyga pasiimta? ${this.checkAvailability() ? "Taip" : "Ne"},
+            knygos id : ${this.#bookId}`;
   }
 }
 

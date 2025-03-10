@@ -1,54 +1,37 @@
-import Book from "../classes/Book.js";
-
 class Reader {
-  static readerCounter = 1;
-
-  #id
-  #readerName;
-  #reader_id;
-  #readerEmail; //TODO
-  #readerPincode; //TODO
-  static listOfReaaders = [];
-  #borrowed_books = [];
-
-  constructor(name, email, pincode) {
-    this.#id = Reader.readerCounter++; //pagal Simonos siandienos koda pakoreguotas
-    this.#readerName = name;
-    this.#readerEmail = email;
-    this.#readerPincode = pincode;
-    this.#reader_id = "GBS " + this.#id;
+  constructor(name, email) {
+    this.readerId = Reader.generateId();  // Automatically assign an ID
+    this.name = name;
+    this.email = email;
+    this.borrowedBooks = [];
   }
 
-  getName() {
-    return this.#readerName;
-  }
-
-  setName(name) {
-    this.#readerName = name;
+  static generateId() {
+    return Math.floor(Math.random() * 1000);  
   }
 
   getReaderId() {
-    return this.#reader_id;
+    return this.readerId;
   }
 
-  setReaderId(newId) {
-    this.#reader_id = newId;
+  getName() {
+    return this.name;
   }
 
-  borrowBook(book) {
-    if (
-      book instanceof Book &&
-      book.checkAvailability() === "Knyga yra bibliotekoje"
-    ) {
-      this.#borrowed_books.push(book);
-    } else {
-      throw new Error("Knyga jau yr paskolinta skatytojui");
-    }
+  getEmail() {
+    return this.email;
   }
 
   getBorrowedBooks() {
-    return this.#borrowed_books;
+    return this.borrowedBooks;
   }
-}
 
+  borrowBook(book) {
+    this.borrowedBooks.push(book);
+  }
+
+  returnBook(book) {
+    this.borrowedBooks = this.borrowedBooks.filter(b => b.getBookId() !== book.getBookId());
+}
+}
 export default Reader;

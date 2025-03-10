@@ -52,6 +52,15 @@ class Category {
         }
     }
 
+    removeBook(book) {
+        const bookIndex = this.#books.indexOf(book);
+        if (bookIndex !== -1) {
+            this.#books.splice(bookIndex, 1);
+        } else {
+            throw new Error("Knyga nerasta kategorijoje");
+        }
+    }
+
     setCategoryName(newCategoryName) {
         if (newCategoryName) {
             this.#categoryName = newCategoryName;

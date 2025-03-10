@@ -22,7 +22,9 @@ const menuItems = [
     ['addBookOption', 'addBookOptionSidebar'],
     ['showBooksList', 'showBooksListSidebar'],
     ['addCategoryOption', 'addCategoryOptionSidebar'],
-    ['showCategoryList', 'showCategoryListSidebar']
+    ['showCategoryList', 'showCategoryListSidebar'],
+    ['addReaderOption', 'addReaderOptionSidebar'],
+    ['showReadersList', 'showReadersListSidebar']
 ];
 
 menuItems.forEach(([navId, sidebarId]) => {

@@ -6,6 +6,7 @@
     <title>Geriausia biblioteka</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/styles/style.css">
+    <script type="module" src="./classes/BorrowReturn.js" defer></script>
     <script type="module" src="app.js" defer></script>
 </head>
 <body>
@@ -15,6 +16,8 @@
         <div id="showBooksList" class="menu-btn">Knygų sąrašas</div>
         <div id="addCategoryOption" class="menu-btn">Sukurti kategoriją</div>
         <div id="showCategoryList" class="menu-btn">Kategorijų sąrašas</div>
+        <div id="addReaderOption" class="menu-btn">Sukurti skaitytoją</div>
+        <div id="showReadersList" class="menu-btn">Skaitytojų sąrašas</div>
     </nav>
 
     <div class="sidebar">
@@ -23,6 +26,8 @@
         <div id="showBooksListSidebar" class="menu-btn">Knygų sąrašas</div>
         <div id="addCategoryOptionSidebar" class="menu-btn">Sukurti kategoriją</div>
         <div id="showCategoryListSidebar" class="menu-btn">Kategorijų sąrašas</div>
+        <div id="addReaderOptionSidebar" class="menu-btn">Sukurti skaitytoją</div>
+        <div id="showReadersListSidebar" class="menu-btn">Skaitytojų sąrašas</div>
     </div>
 
     <div class="screen">
@@ -33,6 +38,9 @@
             <main class="main">
                 <div id="content">
                     <!-- Čia bus dinamiškai įkeliama informacija -->
+                </div>
+                <div id="modal">
+                    <!-- Čia bus dinamiškai įkeliami reader veiksmai -->
                 </div>
             </main>
         </div>

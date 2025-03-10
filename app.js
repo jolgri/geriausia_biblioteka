@@ -3,12 +3,17 @@ import Book from "./classes/Book.js";
 import Library from "./classes/Library.js";
 import Rating from "./classes/Rating.js";
 import Reader from "./users/Reader.js";
+import BorrowReturn from './classes/BorrowReturn.js';
 
 const mainLibrary = new Library();
+const librarySystem = new BorrowReturn(mainLibrary);
+const reader = new Reader();
 const categories = [];
 const trileriuKategorija = new Category("Trileriai", mainLibrary); 
 const siauboKategorija = new Category("Siaubo", mainLibrary); 
-const komedijuKategorija = new Category("Komedija", mainLibrary); 
+const komedijuKategorija = new Category("Komedija", mainLibrary);
+
+window.borrowReturn = librarySystem;
 
 categories.push(trileriuKategorija, siauboKategorija, komedijuKategorija);
 
@@ -52,14 +57,13 @@ const showCategoryForm = document.getElementById("addCategoryOption");
 showCategoryForm.addEventListener("click", () => displayAddCategoryForm());
 
 function displayAddCategoryForm() {
-  content.innerHTML = `
+  content.innerHTML = ` 
         <h2>Pridėti naują Kategoriją</h2>
         <form id="addCategoryForm" class="addForm">
             <label for="CategoryName">Kategorijos pavadinimas</label>
             <input type="text" id="CategoryName" required>
 
             <button class="btn" type="submit">Išsaugoti Kategoriją</button>
-
         </form>
     `;
 
@@ -106,24 +110,24 @@ showBookForm.addEventListener("click", () => displayAddBookForm());
 function displayAddBookForm() {
     content.innerHTML = `
       <h2>Pridėti naują knygą</h2>
-  
+
       <form id="addBookForm" class="addForm">
-  
+
           <label for="bookIsbn">Knygos ISBN:</label>
           <input type="text" id="bookIsbn" minlength="13" maxlength="13" required>
-  
+
           <label for="bookTitle">Knygos pavadinimas:</label>
           <input type="text" id="bookTitle" required>
-  
+
           <label for="bookAuthor">Knygos autorius:</label>
           <input type="text" id="bookAuthor" required>
-  
+
           <label for="bookPrice">Knygos kaina:</label>
           <input type="text" id="bookPrice" required>
-  
+
           <label for="bookDescription">Knygos aprašymas:</label>
           <textarea name="description" id="bookDescription" rows="5" cols="30"></textarea>
-  
+
           <label for="categorySelect">Pasirinkite kategoriją:</label>
           <select id="categorySelect" required>
             <option value="">Pasirinkite kategoriją</option>
@@ -134,7 +138,7 @@ function displayAddBookForm() {
                   `<option value='${category.getCategoryName()}'>${category.getCategoryName()}</option>`
               )}
           </select>
-  
+
           <button class="btn" type="submit">Išsaugoti Knygą</button>
       </form>
       `;
@@ -173,9 +177,56 @@ function displayAddBookForm() {
       e.target.reset();
     });
   }
-  
+
 //-------------HTML turinio kurimas-> KNYGU SARASAS------------------
 
 const showBooksList = document.getElementById("showBooksList");
 
 showBooksList.addEventListener("click", () => mainLibrary.generateBookList()); 
+
+//__________HTML turinio kurimas --> prideti skaitytoja________
+
+const showReaderForm = document.getElementById("addReaderOption");
+
+showReaderForm.addEventListener("click", () => displayAddReaderForm());
+
+function displayAddReaderForm() {
+  content.innerHTML = `
+    <h2>Pridėti naują skaitytoją</h2>
+
+    <form id="addReaderForm" class="addForm">
+
+        <label for="readerName">Skaitytojo vardas:</label>
+        <input type="text" id="readerName" minlength="1" required>
+
+        <label for="readerEmail">Skaitytojo el. paštas:</label>
+        <input type="email" id="readerEmail" required>
+
+        <button class="btn" type="submit">Pridėti skaitytoją</button>
+    </form>
+    `;
+
+  const readerForm = document.getElementById("addReaderForm");
+  readerForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const readerName = e.target.readerName.value;
+    const readerEmail = e.target.readerEmail.value;
+
+    const newReader = new Reader(
+      readerName,
+      readerEmail,
+    );
+
+    mainLibrary.addReader(newReader);
+    console.log(`Reader "${newReader.getName()}" added with this email: "${newReader.getEmail()}"`);
+    e.target.reset();
+  });
+}
+
+//-------------HTML turinio kurimas-> SKAITYTOJU SARASAS------------------
+
+const showReadersList = document.getElementById("showReadersList");
+
+showReadersList.addEventListener("click", () => mainLibrary.generateReadersList()); 
+
+//-------------HTML turinio kurimas-> skolinti / grazinti knygas------------------
