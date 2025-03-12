@@ -1,84 +1,320 @@
+
+/* Reset and base styles */
 * {
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: rgb(70, 100, 100);
-    color: white;
-
-    text-align: center;
-}
-.nav {
-    display: flex;
-    gap: 10px;
-}
-.menu-btn {
-    padding: 20px 0;
-    cursor: pointer;
-}
-.addForm {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin: 0 auto;
-    width: 300px;
-}
-#CategoryName {
-    background-color: aliceblue;
-    color: black;
-}
-h2 {
-    margin: 20px;
+    font-family: 'Poppins', sans-serif;
 }
 
-.menu-btn {
-    padding: 20px 0;
-    cursor: pointer;
-    border-bottom: solid 1px white;
-}
-
-.menu-btn:hover {
-    color: greenyellow;
-}
-
-.main {
-    width: calc(100% - 200px);
+/* Body with quiet, solid background */
+body {
+    background: url('https://www.transparenttextures.com/patterns/light-paper-fibers.png'), #f7f6f2;
+    background-blend-mode: overlay;
+    color: #3c4a4b; /* Deep slate gray */
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* Screen and wrapper layout */
+.screen {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.wrapper {
+    background: #ffffff; /* Pure white */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(60, 74, 75, 0.1); /* Subtle shadow with slate tint */
+    overflow: hidden;
+    margin-top: 80px;
+    transition: transform 0.2s ease;
+}
+
+.wrapper:hover {
+    transform: translateY(-2px);
+}
+
+.wrapper-content {
+    position: relative;
+}
+
+/* Logo styling with muted teal */
+.logo {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #5a7d7f; /* Dusty teal */
+    text-align: center;
+    padding: 20px 0;
+    background: #f7f6f2; /* Matching soft cream */
+    border-bottom: 2px solid #5a7d7f;
+}
+
+/* Navigation styling */
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+    background: #f7f6f2;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    max-width: 1200px;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(60, 74, 75, 0.05);
+}
+
+.menu-btn {
+    padding: 12px 25px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    color: #3c4a4b;
+    background: #d8e2dc; /* Pale sage green */
+}
+
+.menu-btn:hover {
+    background: #5a7d7f; /* Dusty teal */
+    color: #ffffff;
+}
+
+/* Hamburger menu */
+.hamburger {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: #3c4a4b;
+    cursor: pointer;
+    padding: 15px;
+    transition: transform 0.3s ease;
+}
+
+.hamburger:hover {
+    transform: scale(1.1);
+}
+
+/* Sidebar styling */
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1001;
+    top: 0;
+    right: 0;
+    background: #f7f6f2;
+    overflow-x: hidden;
+    transition: width 0.3s ease;
+    padding-top: 60px;
+    box-shadow: -2px 0 8px rgba(60, 74, 75, 0.1);
+}
+
+.sidebar .menu-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.close-btn {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    font-size: 2rem;
+    color: #3c4a4b;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    color: #5a7d7f;
+    transform: scale(1.1);
+}
+
+
+/* Main content area */
+.main {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    background: #fcfcfa; /* Very light cream */
+}
+
+/* Form styling */
 .addForm {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(60, 74, 75, 0.05);
 }
 
-.addForm input, .addForm select  {
-    margin-bottom: 10px;
-    height: 30px;
-    font-size: 18px;
+.addForm input,
+.addForm select {
+    height: 40px;
+    padding: 0 10px;
+    font-size: 1rem;
+    border: 1px solid #d8e2dc; /* Pale sage green */
+    border-radius: 6px;
+    background: #ffffff;
+    color: #3c4a4b;
+    transition: border-color 0.3s ease;
+}
+
+.addForm input:focus,
+.addForm select:focus {
+    outline: none;
+    border-color: #5a7d7f;
+    box-shadow: 0 0 4px rgba(90, 125, 127, 0.3);
 }
 
 .btn {
-    height: 50px;
-    font-family: Poppins, 'serif';
-    font-size: 18px;
-    background-color: lawngreen;
+    height: 45px;
+    font-size: 1.1rem;
+    background: #5a7d7f; /* Dusty teal */
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
+.btn:hover {
+    background: #436465; /* Darker teal */
+}
+
+/* Table styling */
 table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
     width: 100%;
-  }
-   
-  td, th {
-    border: 1px solid #dddddd;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px 15px;
     text-align: left;
-    padding: 8px;
-  }
-   
-  th {
-    background-color: rgba(172, 255, 47, 0.444);
-  }
-  
+    border-bottom: 1px solid #d8e2dc;
+}
+
+th {
+    background: #5a7d7f;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+td {
+    color: #3c4a4b;
+}
+
+tr:hover {
+    background: #fcfcfa;
+}
+
+h2 {
+    margin: 20px 0;
+    font-size: 1.8rem;
+    color: #5a7d7f;
+}
+
+/* Modal Styling */
+.modal {
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(60, 74, 75, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.modal h3 {
+    color: #5a7d7f;
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+/* Modal Buttons */
+button {
+    padding: 12px 25px;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background: #5a7d7f;
+    color: #ffffff;
+    width: 100%;
+}
+
+button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background: #a3b1b2; /* Muted gray */
+}
+
+button:hover:not([disabled]) {
+    background: #436465;
+}
+
+/* Select box inside modal */
+select {
+    padding: 12px 10px;
+    width: 100%;
+    margin-top: 10px;
+    background: #ffffff;
+    color: #3c4a4b;
+    border: 1px solid #d8e2dc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+select:focus {
+    outline: none;
+    border-color: #5a7d7f;
+    box-shadow: 0 0 4px rgba(90, 125, 127, 0.3);
+}
+
+/* Media Query for Mobile */
+@media screen and (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .nav .menu-btn {
+        display: none;
+    }
+
+    .nav {
+        justify-content: space-between;
+        padding: 10px 20px;
+    }
+
+    .sidebar-active {
+        width: 250px;
+    }
+
+    .main {
+        padding: 20px;
+    }
+}

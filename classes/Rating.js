@@ -44,8 +44,6 @@ export default class Rating {
         return this.#comment;
     }
 
-    
-
     //Setter'iai
 
     setRating(newRating) {

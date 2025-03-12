@@ -4,39 +4,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>geriausia biblioteka</title>
-    <script type="module" src="app.js" defer></script>
-    <link rel="stylesheet" href="./assets/styles/style.css">
     <title>Geriausia biblioteka</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/styles/style.css">
+    <script type="module" src="./classes/BorrowReturn.js" defer></script>
+    <script type="module" src="app.js" defer></script>
 </head>
-
 <body>
-    <script type="module" src="app.js"></script>
-    <title>Geriausia biblioteka</title>
 
-    <link rel="stylesheet" href="./assets/styles/style.css">
-    <script type="module" src="app.js" defer></script>
-    </head>
+    <nav class="nav">
+        <button class="hamburger">☰</button>
+        <div id="addBookOption" class="menu-btn">Pridėti knygą</div>
+        <div id="showBooksList" class="menu-btn">Knygų sąrašas</div>
+        <div id="addCategoryOption" class="menu-btn">Sukurti kategoriją</div>
+        <div id="showCategoryList" class="menu-btn">Kategorijų sąrašas</div>
+        <div id="addReaderOption" class="menu-btn">Sukurti skaitytoją</div>
+        <div id="showReadersList" class="menu-btn">Skaitytojų sąrašas</div>
+    </nav>
 
-<body>
+
+    <div class="sidebar">
+        <button class="close-btn">×</button>
+        <div id="addBookOptionSidebar" class="menu-btn">Pridėti knygą</div>
+        <div id="showBooksListSidebar" class="menu-btn">Knygų sąrašas</div>
+        <div id="addCategoryOptionSidebar" class="menu-btn">Sukurti kategoriją</div>
+        <div id="showCategoryListSidebar" class="menu-btn">Kategorijų sąrašas</div>
+        <div id="addReaderOptionSidebar" class="menu-btn">Sukurti skaitytoją</div>
+        <div id="showReadersListSidebar" class="menu-btn">Skaitytojų sąrašas</div>
+    </div>
+
     <div class="screen">
         <div class="wrapper">
             <div class="wrapper-content">
-                <nav class="nav">
-                    <div id="addBookOption" class="menu-btn">Pridėti knygą</div>
-                    <div id="showBooksList" class="menu-btn">Knygų sąrašas</div>
-                    <div id="addCategoryOption" class="menu-btn">Sukurti kategoriją</div>
-                    <div id="showCategoryList" class="menu-btn">Kategorijų sąrašas</div>
-                </nav>
+                <div class="logo">GB</div>
             </div>
             <main class="main">
                 <div id="content">
                     <!-- Čia bus dinamiškai įkeliama informacija -->
                 </div>
+                <div id="modal">
+                    <!-- Čia bus dinamiškai įkeliami reader veiksmai -->
+                </div>
             </main>
         </div>
     </div>
+<script src="./assets/hamburger.js"></script>
 </body>
-
 </html>

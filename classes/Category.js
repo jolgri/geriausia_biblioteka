@@ -41,7 +41,7 @@ class Category {
     getBooksByPriceRange(minPrice, maxPrice) {
         return this.#books.filter(book => book.getBookPrice() > minPrice && book.getBookPrice() < maxPrice);
     }
-    
+
     // setteriai
 
     addBook(book) {
@@ -49,6 +49,15 @@ class Category {
             this.#books.push(book);
         } else {
             throw new Error("Pridedamas objektas nėra knyga");
+        }
+    }
+
+    removeBook(book) {
+        const bookIndex = this.#books.indexOf(book);
+        if (bookIndex !== -1) {
+            this.#books.splice(bookIndex, 1);
+        } else {
+            throw new Error("Knyga nerasta kategorijoje");
         }
     }
 
