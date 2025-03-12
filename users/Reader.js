@@ -1,3 +1,4 @@
+
 class Reader {
   constructor(name, email) {
     this.readerId = Reader.generateId();  // Automatically assign an ID
@@ -32,6 +33,6 @@ class Reader {
 
   returnBook(book) {
     this.borrowedBooks = this.borrowedBooks.filter(b => b.getBookId() !== book.getBookId());
-}
+  }
 }
 export default Reader;

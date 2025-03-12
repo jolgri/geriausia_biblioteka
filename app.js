@@ -3,6 +3,7 @@ import Book from "./classes/Book.js";
 import Library from "./classes/Library.js";
 import Rating from "./classes/Rating.js";
 import Reader from "./users/Reader.js";
+
 import BorrowReturn from './classes/BorrowReturn.js';
 
 const mainLibrary = new Library();
@@ -57,6 +58,7 @@ const showCategoryForm = document.getElementById("addCategoryOption");
 showCategoryForm.addEventListener("click", () => displayAddCategoryForm());
 
 function displayAddCategoryForm() {
+
   content.innerHTML = ` 
         <h2>Pridėti naują Kategoriją</h2>
         <form id="addCategoryForm" class="addForm">
@@ -64,6 +66,7 @@ function displayAddCategoryForm() {
             <input type="text" id="CategoryName" required>
 
             <button class="btn" type="submit">Išsaugoti Kategoriją</button>
+
         </form>
     `;
 
@@ -110,7 +113,6 @@ showBookForm.addEventListener("click", () => displayAddBookForm());
 function displayAddBookForm() {
     content.innerHTML = `
       <h2>Pridėti naują knygą</h2>
-
       <form id="addBookForm" class="addForm">
 
           <label for="bookIsbn">Knygos ISBN:</label>
@@ -127,7 +129,6 @@ function displayAddBookForm() {
 
           <label for="bookDescription">Knygos aprašymas:</label>
           <textarea name="description" id="bookDescription" rows="5" cols="30"></textarea>
-
           <label for="categorySelect">Pasirinkite kategoriją:</label>
           <select id="categorySelect" required>
             <option value="">Pasirinkite kategoriją</option>
@@ -182,6 +183,7 @@ function displayAddBookForm() {
 
 const showBooksList = document.getElementById("showBooksList");
 
+
 showBooksList.addEventListener("click", () => mainLibrary.generateBookList()); 
 
 //__________HTML turinio kurimas --> prideti skaitytoja________
@@ -228,5 +230,3 @@ function displayAddReaderForm() {
 const showReadersList = document.getElementById("showReadersList");
 
 showReadersList.addEventListener("click", () => mainLibrary.generateReadersList()); 
-
-//-------------HTML turinio kurimas-> skolinti / grazinti knygas------------------

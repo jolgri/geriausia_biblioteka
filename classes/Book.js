@@ -1,3 +1,5 @@
+import Library from "./Library.js";
+
 class Book {
   static bookCounter = 0;
   static existingIsbns = new Set();
@@ -20,7 +22,9 @@ class Book {
     bookPrice,
     bookDesc,
     is_checked_out
+
   ) {
+
     if (!bookAuthor || typeof bookAuthor !== "string") {
       throw new Error("Autorius privalo egzistuoti");
     }
@@ -51,6 +55,7 @@ class Book {
 
   // Getteriai
   getBookId() {
+
     return this.#bookId;
   }
 
@@ -84,6 +89,7 @@ class Book {
 
   // Setteriai
   setBookTitle(newTitle) {
+
     if (!newTitle || typeof newTitle !== "string") {
       throw new Error("Pavadinimas negali būti tuščias.");
     }
@@ -91,23 +97,33 @@ class Book {
   }
 
   setBookPrice(newPrice) {
+
     if (newPrice <= 0 || typeof newPrice !== "number") {
       throw new Error("Kaina negali būti mažesnė už 0");
+    } else {
+      this.#price = newPrice;
     }
     this.#price = newPrice;
   }
 
   setDescription(newDescription) {
+
     if (!newDescription || typeof newDescription !== "string") {
       throw new Error("Aprašymas negali būti tuščias");
+    } else {
+      this.#description = newDescription;
     }
     this.#description = newDescription;
   }
 
   setCategory(newCategory) {
+
     if (!newCategory || typeof newCategory !== "string") {
       throw new Error("Kategorija neparinkta");
+    } else {
+      this.#category = newCategory;
     }
+
     this.#category = newCategory;
   }
 
@@ -133,6 +149,7 @@ class Book {
   // Info getteris
   getInfo() {
     return `Knygos pavadinimas: ${this.#title},
+
             knygos autorius: ${this.#author},
             knygos žanras: ${this.getCategory()},
             knygos kaina: ${this.#price},

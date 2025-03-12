@@ -1,3 +1,4 @@
+
 class Library {
   constructor() {
     this.categories = [];
@@ -150,6 +151,7 @@ class Library {
             const info = book.getInfo();
   
             htmlContent += `
+
               <tr>
                 <td>${category.getCategoryName()}</td>
                 <td>${book.getBookTitle()}</td>
@@ -168,6 +170,7 @@ class Library {
   
     document.getElementById("content").innerHTML = htmlContent;
   }
+
 
   // Method to get all categories
   getCategories() {
