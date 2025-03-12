@@ -31,16 +31,13 @@ class BorrowReturn {
         const selectElement = modal.querySelector('#borrowBookSelect');
         const cancelBtn = modal.querySelector('#cancelBtn');
     
-        // Enable the button when a selection is made
         selectElement.addEventListener('change', () => {
-            console.log(selectElement.value); // Check the selected value
+            console.log(selectElement.value);
             borrowConfirmBtn.disabled = !selectElement.value;
         });
     
-        // Add event listener for the borrow confirmation
         borrowConfirmBtn.addEventListener('click', () => this.borrowBook(readerId));
     
-        // Add event listener for canceling the interaction
         cancelBtn.addEventListener('click', () => this.clearModal());
     }
 
@@ -89,16 +86,14 @@ class BorrowReturn {
             returnConfirmBtn.disabled = !selectElement.value;
         });
     
-        // Add event listener for the return confirmation
         returnConfirmBtn.addEventListener('click', () => this.returnBook(readerId));
-    
-        // Add event listener for canceling the interaction
+
         cancelBtn.addEventListener('click', () => this.clearModal());
     }
 
     returnBook(readerId) {
         const bookId = document.getElementById("returnBookSelect").value;
-        console.log("Book ID: " + bookId); // Check if the book ID is correct
+        console.log("Book ID: " + bookId); 
         if (bookId) {
             this.mainLibrary.returnBook(readerId, bookId);
             this.mainLibrary.generateReadersList();
@@ -110,7 +105,7 @@ class BorrowReturn {
 
     clearModal() {
         const modal = document.getElementById("modal");
-        modal.innerHTML = ''; // Clears the modal content after the action
+        modal.innerHTML = '';
     }
 }
 
