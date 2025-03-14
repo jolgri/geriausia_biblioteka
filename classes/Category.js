@@ -7,11 +7,13 @@ class Category {
     #id;
     #categoryName;
     #books;
+    #library;
 
     constructor(categoryName, library) {
         this.#id = Category.counter++;
         this.#categoryName = categoryName;
         this.#books = []; // Knygų masyvas
+        this.#library = library;
 
         if (library instanceof Library) {
             library.addCategory(this);
@@ -110,27 +112,15 @@ class Category {
         });
     }
 
-    deleteCategory(categoryId) {
-        const index = categories.findIndex(cat => cat.getCategoryId() === parseInt(categoryId));
-      
-        if (index !== -1) {
-          const categoryToDelete = categories[index];
-          const booksToReassign = categoryToDelete.getBooks(); 
-      
-          let uncategorized = categories.find(cat => cat.getCategoryName() === "Be kategorijos");
-          if (!uncategorized) {
-            uncategorized = new Category("Be kategorijos", mainLibrary);
-            categories.push(uncategorized);
-          }
-      
-          booksToReassign.forEach(book => book.setCategory(uncategorized));
-      
-          categories.splice(index, 1);
-          console.log(`Category "${categoryToDelete.getCategoryName()}" deleted.`);
-          displayCategoryList();
+    deleteCategory(categoryId, categories, displayCategoryList) {
+        const category = categories.findIndex(c => c.getCategoryId() === parseInt(categoryId));
+        if (category !== -1) {
+            categories.splice(category, 1);
         }
-      }
-
+        displayCategoryList();
+        console.log(`${categoryId} buvo pasalinta.`)
+    }
+    
     getEditFormHTML(category) {
         return `
         <h2>Redaguoti Kategoriją</h2>
