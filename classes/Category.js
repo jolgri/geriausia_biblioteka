@@ -68,7 +68,67 @@ class Category {
             throw new Error("Kategorijos pavadinimas negali būti tuščias");
         }
     }
+    attachEditListeners(categories, displayCategoryList) { // Pridedam categories kaip parametrą
+        const editButtons = document.querySelectorAll('.edit-button');
+        editButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const categoryId = button.getAttribute('data-category-id');
+                console.log(`Redaguoti kategoriją su ID: ${categoryId}`);
+                this.editCategory(categoryId, categories, displayCategoryList);
+            });
+        });
 
+        const deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const categoryId = button.getAttribute('data-category-id');
+                // console.log(typeof categoryId)
+                console.log(`Ištrinti kategoriją su ID: ${categoryId}`);
+                this.deleteCategory(categoryId, categories, displayCategoryList);
+            });
+        });
+    }
+
+    editCategory(categoryId, categories, displayCategoryList) {
+        const category = categories.find(cat => cat.getCategoryId() === parseInt(categoryId));
+
+        if (!category) {
+            console.error('Kategorija nerasta!');
+            return;
+        }
+
+        const content = document.getElementById('content');
+        content.innerHTML = this.getEditFormHTML(category);
+
+        const editForm = document.getElementById('editCategoryForm');
+        editForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newCategoryName = e.target.editCategoryName.value;
+            category.setCategoryName(newCategoryName);
+
+            displayCategoryList(); // Atnaujiname sąrašą
+        });
+    }
+
+    deleteCategory(categoryId, categories, displayCategoryList) {
+        const category = categories.findIndex(c => c.getCategoryId() === parseInt(categoryId));
+        if (category !== -1) {
+            categories.splice(category, 1);
+        }
+        displayCategoryList();
+        console.log(`${categoryId} buvo pasalinta.`)
+    }
+
+    getEditFormHTML(category) {
+        return `
+        <h2>Redaguoti Kategoriją</h2>
+     <form id="editCategoryForm" class="addForm">
+        <label for="editCategoryName">Kategorijos pavadinimas</label>
+        <input type="text" id="editCategoryName" value="${category.getCategoryName()}" required>
+        <button class="btn" type="submit">Išsaugoti Kategoriją</button>
+    </form>
+    `;
+    }
 }
 
 export default Category;
