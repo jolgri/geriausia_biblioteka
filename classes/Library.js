@@ -115,7 +115,6 @@ class Library {
               <td>${reader.getEmail()}</td>
               <td>${borrowedBooks}</td>
               <td>
-                <button onclick="library.displayEditReaderForm(${reader.getReaderId()})">Redaguoti</button>
                 <button onclick="borrowReturn.displayBorrowBookForm(${reader.getReaderId()})">Skolintis knygą</button>
                 <button onclick="borrowReturn.displayReturnBookForm(${reader.getReaderId()})">Grąžinti knygą</button>
                 <button class="delete-reader" data-reader-id="${reader.getReaderId()}">Ištrinti skaitytoją</button>
