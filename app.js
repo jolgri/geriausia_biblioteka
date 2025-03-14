@@ -111,10 +111,10 @@ function displayCategoryList() {
               <td>${cat.getCategoryName()}</td>
               <td>
                   <button data-category-id="${cat.getCategoryId()}" class="action-btn edit-button" >
-                      <img src="./assets/img/edit.svg" width='25px' >
+                      <img src="./assets/imgs/edit.svg" width='25px' >
                   </button>
                   <button data-category-id="${cat.getCategoryId()}" class="action-btn delete-button" >
-                      <img src="./assets/img/delete.svg" width='25px' >
+                      <img src="./assets/imgs/delete.svg" width='25px' >
                   </button>
               </td>
           </tr>

@@ -95,7 +95,7 @@ class Library {
                            </tr>
                          </thead>
                          <tbody>`;
-
+  
     if (this.readers.length === 0) {
       htmlContent += `<tr><td colspan="5" style="text-align:center;">Nėra skaitytojų!</td></tr>`;
     } else {
@@ -105,74 +105,227 @@ class Library {
             .getBorrowedBooks()
             .map((book) => book.getBookTitle())
             .join(", ") || "Nėra";
-
+  
         htmlContent += `
-                <tr>
-                  <td>${reader.getReaderId()}</td>
-                  <td>${reader.getName()}</td>
-                  <td>${reader.getEmail()}</td>
-                  <td>${borrowedBooks}</td>
-                  <td>
-                    <button onclick="borrowReturn.displayBorrowBookForm(${reader.getReaderId()})" class="">Skolintis knygą</button>
-                    <button onclick="borrowReturn.displayReturnBookForm(${reader.getReaderId()})">Grąžinti knygą</button>
-                  </td>
-                </tr>`;
+              <tr>
+                <td>${reader.getReaderId()}</td>
+                <td>${reader.getName()}</td>
+                <td>${reader.getEmail()}</td>
+                <td>${borrowedBooks}</td>
+                <td>
+                  <button onclick="borrowReturn.displayBorrowBookForm(${reader.getReaderId()})">Skolintis knygą</button>
+                  <button onclick="borrowReturn.displayReturnBookForm(${reader.getReaderId()})">Grąžinti knygą</button>
+                  <button class="delete-reader" data-reader-id="${reader.getReaderId()}">Ištrinti skaitytoją</button>
+                </td>
+              </tr>`;
       });
     }
+    document.addEventListener("click", (e) => {
+      if (e.target.classList.contains("delete-reader")) {
+        const readerId = e.target.getAttribute("data-reader-id");
+        this.deleteReader(readerId);
+      }
+    });
+
     htmlContent += `</tbody></table>`;
     document.getElementById("content").innerHTML = htmlContent;
   }
+  
+  
+  displayEditBookForm(bookId) {
+    bookId = Number(bookId);
+    const book = this.getAllBooks().find((b) => b.getBookId() === bookId);
+
+    if (!book) {
+      console.log("Book not found!");
+      return;
+    }
+
+    const content = document.getElementById("content");
+    content.innerHTML = `
+      <h2>Redaguoti knygą</h2>
+      <form id="editBookForm" class="addForm">
+          <label for="editBookTitle">Knygos pavadinimas:</label>
+          <input type="text" id="editBookTitle" value="${book.getBookTitle()}" required>
+
+          <label for="editBookAuthor">Knygos autorius:</label>
+          <input type="text" id="editBookAuthor" value="${book.getBookAuthor()}" required>
+
+          <label for="editBookPrice">Knygos kaina:</label>
+          <input type="text" id="editBookPrice" value="${book.getBookPrice()}" required>
+
+          <label for="editCategorySelect">Pasirinkite kategoriją:</label>
+          <select id="editCategorySelect">
+            <option value="">Pasirinkite kategoriją</option>
+            ${this.getCategories()
+              .map(
+                (category) =>
+                  `<option value='${category.getCategoryName()}' ${
+                    book.getCategory()?.getCategoryName() === category.getCategoryName()
+                      ? "selected"
+                      : ""
+                  }>${category.getCategoryName()}</option>`
+              )
+              .join("")}
+          </select>
+
+          <button class="btn" type="submit">Išsaugoti pakeitimus</button>
+      </form>
+    `;
+
+    document.getElementById("editBookForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      book.setBookTitle(e.target.editBookTitle.value);
+      book.setBookAuthor(e.target.editBookAuthor.value);
+      book.setBookPrice(parseFloat(e.target.editBookPrice.value));
+
+      const newCategoryName = e.target.editCategorySelect.value;
+      const newCategory = this.getCategories()
+        .find((c) => c.getCategoryName() === newCategoryName);
+
+      if (newCategory) {
+        book.setCategory(newCategory);
+      } else {
+        book.setCategory(null);
+      }
+
+      console.log(`Book "${book.getBookTitle()}" updated!`);
+      this.generateBookList();
+    });
+  }
+
 
   generateBookList() {
-    let htmlContent = `<table border="1" style="width:100%; border-collapse: collapse;">
-                         <thead>
-                           <tr>
-                             <th>Kategorija</th>
-                             <th>Pavadinimas</th>
-                             <th>Autorius</th>
-                             <th>Kaina</th>
-                             <th>Aprašymas</th>
-                             <th>Prieinamumas</th>
-                             <th>ISBN</th>
-                           </tr>
-                         </thead>
-                         <tbody>`;
+    const books = this.getAllBooks();
   
-    if (this.categories.length === 0) {
-      htmlContent += `<tr><td colspan="7" style="text-align:center;">Nėra kategorijų arba knygų!</td></tr>`;
-    } else {
-      this.categories.forEach(category => {
-        const books = category.getBooks();
-  
-        if (books.length === 0) {
-          htmlContent += `<tr><td colspan="7" style="text-align:center;">Šioje kategorijoje nėra knygų.</td></tr>`;
-        } else {
-          books.forEach(book => {
-            const info = book.getInfo();
-  
-            htmlContent += `
-
-              <tr>
-                <td>${category.getCategoryName()}</td>
-                <td>${book.getBookTitle()}</td>
-                <td>${book.getBookAuthor()}</td>
-                <td>${book.getBookPrice().toFixed(2)} EUR</td>
-                <td>${book.getBookDescription()}</td>
-                <td>${book.checkAvailability() ? 'Pasiekiama' : 'Nepasiekiama'}</td>
-                <td>${book.getBookIsbn()}</td>
-              </tr>`;
-          });
-        }
-      });
+    if (books.length === 0) {
+      content.innerHTML = "<p>Nėra pridėtų knygų</p>";
+      return;
     }
   
-    htmlContent += `</tbody></table>`;
+    let htmlContent = `<table>
+      <tr>
+          <th>Eil. nr.</th>
+          <th>ID</th>
+          <th>Pavadinimas</th>
+          <th>Autorius</th>
+          <th>Kaina</th>
+          <th>Kategorija</th>
+          <th>Veiksmai</th>
+      </tr>`;
   
-    document.getElementById("content").innerHTML = htmlContent;
+    books.forEach((book, index) => {
+      const categoryName = book.getCategory() ? book.getCategory().getCategoryName() : "Be kategorijos";
+      console.log(`Book ${book.getBookId()}:`, book);
+      console.log(`Category for Book ${book.getBookId()}:`, categoryName);
+  
+      htmlContent += `
+        <tr>
+            <td>${index + 1}</td>
+            <td>${book.getBookId()}</td>
+            <td>${book.getBookTitle()}</td>
+            <td>${book.getBookAuthor()}</td>
+            <td>${book.getBookPrice()} €</td>
+            <td>${categoryName}</td>
+            <td>
+                <button data-book-id="${book.getBookId()}" class="edit-book action-btn">
+                    <img src="./assets/imgs/edit.svg" width="25px">
+                </button>
+                <button data-book-id="${book.getBookId()}" class="delete-book action-btn">
+                    <img src="./assets/imgs/delete.svg" width="25px">
+                </button>
+            </td>
+        </tr>`;
+    });
+  
+    htmlContent += `</table>`;
+    content.innerHTML = htmlContent;
+  
+    document.querySelectorAll(".edit-book").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const bookId = e.currentTarget.getAttribute("data-book-id");
+        this.displayEditBookForm(bookId);
+      });
+    });
+  
+    document.querySelectorAll(".delete-book").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const bookId = e.currentTarget.getAttribute("data-book-id");
+        this.deleteBook(bookId);
+      });
+    });
   }
 
+  deleteBook(bookId) {
+    const books = this.getAllBooks();
+    const bookIndex = books.findIndex((b) => b.getBookId() === parseInt(bookId));
+  
+    if (bookIndex !== -1) {
+      const book = books[bookIndex];
+  
+      // Jei knyga paskolinta neleis jos istrinti
+      if (!book.checkAvailability()) {
+        console.log("Knyga negalima pašalinti, nes ji pasiskolinta.");
+        return;
+      }
+  
+      const category = book.getCategory();
+      if (category) {
+        const categoryBooks = category.getBooks();
+        const bookCategoryIndex = categoryBooks.indexOf(book);
+        categoryBooks.splice(bookCategoryIndex, 1);
+      }
+  
+      books.splice(bookIndex, 1);
+  
+      console.log(`Book with ID ${bookId} deleted.`);
+      this.generateBookList();
+    } else {
+      console.log(`Book with ID ${bookId} not found.`);
+    }
+  }
 
-  // Method to get all categories
+editBook(bookIsbn, newTitle, newAuthor, newPrice, newDescription) {
+  this.categories.forEach(category => {
+      const book = category.getBooksList().find(book => book.getBookIsbn() === bookIsbn);
+      if (book) {
+          book.setBookTitle(newTitle);
+          book.setBookAuthor(newAuthor);
+          book.setBookPrice(newPrice);
+          book.setBookDescription(newDescription);
+          console.log(`Book with ISBN ${bookIsbn} updated.`);
+      }
+  });
+  this.generateBookList(); 
+}
+
+deleteReader(readerId) {
+  readerId = parseInt(readerId);
+
+  const readerIndex = this.readers.findIndex((reader) => reader.getReaderId() === readerId);
+
+  if (readerIndex !== -1) {
+    const reader = this.readers[readerIndex];
+    console.log("Reader to delete:", reader);
+
+    const borrowedBooks = reader.getBorrowedBooks();
+    console.log("Borrowed books:", borrowedBooks);
+
+    borrowedBooks.forEach((book) => {
+      this.returnBook(reader.getReaderId(), book.getBookId());
+      book.setAvailability(true);
+      console.log(`Grąžinta knyga: ${book.getBookTitle()}`);
+    });
+
+    this.readers.splice(readerIndex, 1);
+    console.log(`Skaitytojas su ID ${readerId} ištrintas.`);
+    this.generateReadersList();
+  } else {
+    console.log(`Skaitytojas su ID ${readerId} nerastas.`);
+  }
+}
+
   getCategories() {
     return this.categories;
   }

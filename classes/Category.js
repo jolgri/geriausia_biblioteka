@@ -110,14 +110,26 @@ class Category {
         });
     }
 
-    deleteCategory(categoryId, categories, displayCategoryList) {
-        const category = categories.findIndex(c => c.getCategoryId() === parseInt(categoryId));
-        if (category !== -1) {
-            categories.splice(category, 1);
+    deleteCategory(categoryId) {
+        const index = categories.findIndex(cat => cat.getCategoryId() === parseInt(categoryId));
+      
+        if (index !== -1) {
+          const categoryToDelete = categories[index];
+          const booksToReassign = categoryToDelete.getBooks(); 
+      
+          let uncategorized = categories.find(cat => cat.getCategoryName() === "Be kategorijos");
+          if (!uncategorized) {
+            uncategorized = new Category("Be kategorijos", mainLibrary);
+            categories.push(uncategorized);
+          }
+      
+          booksToReassign.forEach(book => book.setCategory(uncategorized));
+      
+          categories.splice(index, 1);
+          console.log(`Category "${categoryToDelete.getCategoryName()}" deleted.`);
+          displayCategoryList();
         }
-        displayCategoryList();
-        console.log(`${categoryId} buvo pasalinta.`)
-    }
+      }
 
     getEditFormHTML(category) {
         return `
