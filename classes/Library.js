@@ -1,5 +1,6 @@
 
 class Library {
+  
   constructor() {
     this.categories = [];
     this.readers = [];
@@ -84,6 +85,7 @@ class Library {
   }
 
   generateReadersList() {
+  
     let htmlContent = `<table border="1" style="width:100%; border-collapse: collapse;">
                          <thead>
                            <tr>
@@ -107,31 +109,33 @@ class Library {
             .join(", ") || "Nėra";
   
         htmlContent += `
-              <tr>
-                <td>${reader.getReaderId()}</td>
-                <td>${reader.getName()}</td>
-                <td>${reader.getEmail()}</td>
-                <td>${borrowedBooks}</td>
-                <td>
-                  <button onclick="borrowReturn.displayBorrowBookForm(${reader.getReaderId()})">Skolintis knygą</button>
-                  <button onclick="borrowReturn.displayReturnBookForm(${reader.getReaderId()})">Grąžinti knygą</button>
-                  <button class="delete-reader" data-reader-id="${reader.getReaderId()}">Ištrinti skaitytoją</button>
-                </td>
-              </tr>`;
+            <tr>
+              <td>${reader.getReaderId()}</td>
+              <td>${reader.getName()}</td>
+              <td>${reader.getEmail()}</td>
+              <td>${borrowedBooks}</td>
+              <td>
+                <button onclick="library.displayEditReaderForm(${reader.getReaderId()})">Redaguoti</button>
+                <button onclick="borrowReturn.displayBorrowBookForm(${reader.getReaderId()})">Skolintis knygą</button>
+                <button onclick="borrowReturn.displayReturnBookForm(${reader.getReaderId()})">Grąžinti knygą</button>
+                <button class="delete-reader" data-reader-id="${reader.getReaderId()}">Ištrinti skaitytoją</button>
+              </td>
+            </tr>`;
       });
     }
+  
+    htmlContent += `</tbody></table>`;
+    document.getElementById("content").innerHTML = htmlContent;
+  
     document.addEventListener("click", (e) => {
       if (e.target.classList.contains("delete-reader")) {
         const readerId = e.target.getAttribute("data-reader-id");
         this.deleteReader(readerId);
       }
     });
-
-    htmlContent += `</tbody></table>`;
-    document.getElementById("content").innerHTML = htmlContent;
   }
   
-  
+  //----------BOOK CONTROL---------------///
   displayEditBookForm(bookId) {
     bookId = Number(bookId);
     const book = this.getAllBooks().find((b) => b.getBookId() === bookId);
@@ -212,6 +216,7 @@ class Library {
           <th>Autorius</th>
           <th>Kaina</th>
           <th>Kategorija</th>
+          <th>Prieinamumas</th>
           <th>Veiksmai</th>
       </tr>`;
   
@@ -228,6 +233,7 @@ class Library {
             <td>${book.getBookAuthor()}</td>
             <td>${book.getBookPrice()} €</td>
             <td>${categoryName}</td>
+            <td>${book.checkAvailability() ? 'Pasiekiama' : 'Nepasiekiama'}</td>
             <td>
                 <button data-book-id="${book.getBookId()}" class="edit-book action-btn">
                     <img src="./assets/imgs/edit.svg" width="25px">
@@ -299,7 +305,7 @@ editBook(bookIsbn, newTitle, newAuthor, newPrice, newDescription) {
   });
   this.generateBookList(); 
 }
-
+//----------READER CONTROL---------------///
 deleteReader(readerId) {
   readerId = parseInt(readerId);
 
@@ -325,6 +331,7 @@ deleteReader(readerId) {
     console.log(`Skaitytojas su ID ${readerId} nerastas.`);
   }
 }
+//TODO Jolanta, pasiskaitykit pagalvokit kaip padaryti veikianti editReader ir displayEditReaderForm
 
   getCategories() {
     return this.categories;
