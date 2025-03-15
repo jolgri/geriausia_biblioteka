@@ -253,3 +253,4 @@ function displayAddReaderForm() {
 const showReadersList = document.getElementById("showReadersList");
 
 showReadersList.addEventListener("click", () => mainLibrary.generateReadersList()); 
+

@@ -1,4 +1,3 @@
-
 class Library {
   
   constructor() {
@@ -12,6 +11,7 @@ class Library {
 
   addReader(reader) {
     this.readers.push(reader);
+
   }
 
   getReaderById(readerId) {
@@ -108,6 +108,7 @@ class Library {
             .map((book) => book.getBookTitle())
             .join(", ") || "Nėra";
   
+
         htmlContent += `
             <tr>
               <td>${reader.getReaderId()}</td>
@@ -332,6 +333,12 @@ deleteReader(readerId) {
 }
 //TODO Jolanta, pasiskaitykit pagalvokit kaip padaryti veikianti editReader ir displayEditReaderForm
 
+  getCategories() {
+    return this.categories;
+  }
+
+
+  // Method to get all categories
   getCategories() {
     return this.categories;
   }

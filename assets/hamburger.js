@@ -38,4 +38,6 @@ menuItems.forEach(([navId, sidebarId]) => {
             sidebar.classList.remove('sidebar-active'); // Close sidebar
         });
     }
+
 });
+
