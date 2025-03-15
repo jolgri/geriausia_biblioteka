@@ -68,7 +68,8 @@ class Book {
   }
 
   getCategory() {
-    return this.#category.getCategoryName ? this.#category.getCategoryName() : this.#category;
+
+    return this.#category;
   }
 
   getBookIsbn() {
@@ -96,6 +97,14 @@ class Book {
     this.#title = newTitle;
   }
 
+  setBookAuthor(newAuthor) {
+
+    if (!newAuthor || typeof newAuthor !== "string") {
+      throw new Error("Autorius negali būti tuščias langleis.");
+    }
+    this.#author = newAuthor;
+  }
+
   setBookPrice(newPrice) {
 
     if (newPrice <= 0 || typeof newPrice !== "number") {
@@ -117,13 +126,6 @@ class Book {
   }
 
   setCategory(newCategory) {
-
-    if (!newCategory || typeof newCategory !== "string") {
-      throw new Error("Kategorija neparinkta");
-    } else {
-      this.#category = newCategory;
-    }
-
     this.#category = newCategory;
   }
 

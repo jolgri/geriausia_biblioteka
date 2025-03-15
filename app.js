@@ -80,6 +80,7 @@ function displayAddCategoryForm() {
     console.log(`kategorijos objektas ${newCategory.getCategoryName()}`);
 
     e.target.reset();
+    displayCategoryList();
   });
 }
 
@@ -90,18 +91,40 @@ const showCategoryList = document.getElementById('showCategoryList');
 showCategoryList.addEventListener('click', () => displayCategoryList());
 
 function displayCategoryList() {
-    if (categories.length === 0) {
-        content.innerHTML = '<p>Nėra pridėtų kategorijų</p>';
-        return;
-    }
+  if (categories.length === 0) {
+      content.innerHTML = '<p>Nėra pridėtų kategorijų</p>';
+      return;
+  }
 
-    let htmlContent = `<ul>`;
-    categories.forEach(category => {
-        htmlContent += `<li>${category.getCategoryName()}</li>`;
-    });
-    htmlContent += `</ul>`;
+  let htmlContent = `<table>
+      <tr>
+          <th>Eil. nr.</th>
+          <th>Pavadinimas</th>
+          <th>Veiksmai</th>
+      </tr>
+  `;
+  let counter = 0;
+  categories.forEach(cat => {
+      htmlContent += `
+          <tr>
+              <td>${++counter}</td>
+              <td>${cat.getCategoryName()}</td>
+              <td>
+                  <button data-category-id="${cat.getCategoryId()}" class="action-btn edit-button" >
+                      <img src="./assets/imgs/edit.svg" width='25px' >
+                  </button>
+                  <button data-category-id="${cat.getCategoryId()}" class="action-btn delete-button" >
+                      <img src="./assets/imgs/delete.svg" width='25px' >
+                  </button>
+              </td>
+          </tr>
+      `;
+  });
+  htmlContent += `</table>`;
+  content.innerHTML = htmlContent;
 
-    content.innerHTML = htmlContent;
+  // Pridedame klausytojus po HTML sugeneravimo
+  categories.forEach(category => category.attachEditListeners(categories, displayCategoryList));
 }
 
 //__________HTML turinio kurimas --> prideti knyga________
@@ -230,3 +253,4 @@ function displayAddReaderForm() {
 const showReadersList = document.getElementById("showReadersList");
 
 showReadersList.addEventListener("click", () => mainLibrary.generateReadersList()); 
+

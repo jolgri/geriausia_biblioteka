@@ -10,3 +10,4 @@ Mano variantas nera kazkoks imantrus ar sudetingas, nesifokusuoju i saugojima i 
 ![image](https://github.com/user-attachments/assets/052dd403-a8e0-483a-a419-70d6fdccd393)
 
 ![image](https://github.com/user-attachments/assets/ebe6cc7e-3d9d-4f6f-a0ad-061eec17b616)
+
