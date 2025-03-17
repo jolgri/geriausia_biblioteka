@@ -189,7 +189,10 @@ class Library {
         .find((c) => c.getCategoryName() === newCategoryName);
 
       if (newCategory) {
+        const oldCategory = book.getCategory()
         book.setCategory(newCategory);
+        oldCategory.removeBook(book);
+        newCategory.addBook(book);
       } else {
         book.setCategory(null);
       }
