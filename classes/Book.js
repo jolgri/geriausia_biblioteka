@@ -68,6 +68,7 @@ class Book {
   }
 
   getCategory() {
+
     return this.#category;
   }
 
