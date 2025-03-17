@@ -85,16 +85,17 @@
     </div>
 <script src="./assets/hamburger.js"></script>
 <script>
-
     const introScreen = document.getElementById('introScreen');
-  
     const buttons = document.querySelectorAll('.menu-btn, .hamburger, .close-btn');
-  
+    const content = document.getElementById('content');
+
     buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        introScreen.classList.add('hidden');
-      });
+        button.addEventListener('click', () => {
+            introScreen.classList.add('hidden'); // Hide intro screen
+            content.classList.remove('hidden'); // Show content
+        });
     });
+</script>
   </script>
 </body>
 </html>
