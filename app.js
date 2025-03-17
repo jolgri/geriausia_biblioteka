@@ -10,13 +10,15 @@ const mainLibrary = new Library();
 const librarySystem = new BorrowReturn(mainLibrary);
 const reader = new Reader();
 const categories = [];
-const trileriuKategorija = new Category("Trileriai", mainLibrary); 
-const siauboKategorija = new Category("Siaubo", mainLibrary); 
+const trileriuKategorija = new Category("Trileriai", mainLibrary);
+const siauboKategorija = new Category("Siaubo", mainLibrary);
 const komedijuKategorija = new Category("Komedija", mainLibrary);
+const beKategorijos = new Category('Be kategorijos', mainLibrary);
 
 window.borrowReturn = librarySystem;
 
-categories.push(trileriuKategorija, siauboKategorija, komedijuKategorija);
+categories.push(trileriuKategorija, siauboKategorija, komedijuKategorija, beKategorijos);
+
 
 const newBook2 = new Book(
   "Džonas Vickas",
@@ -40,7 +42,7 @@ const newBook3 = new Book(
 console.log(newBook3);
 console.log(newBook2);
 
-trileriuKategorija.addBook(newBook2); 
+trileriuKategorija.addBook(newBook2);
 trileriuKategorija.addBook(newBook3);
 console.log(trileriuKategorija.getBooksByPriceRange(15, 20));
 
@@ -96,6 +98,7 @@ function displayCategoryList() {
       return;
   }
 
+  const filteredCategories = categories.filter(cat => cat.getCategoryName() !== 'Be kategorijos');
   let htmlContent = `<table>
       <tr>
           <th>Eil. nr.</th>
@@ -104,7 +107,7 @@ function displayCategoryList() {
       </tr>
   `;
   let counter = 0;
-  categories.forEach(cat => {
+  filteredCategories.forEach(cat => {
       htmlContent += `
           <tr>
               <td>${++counter}</td>
@@ -124,8 +127,9 @@ function displayCategoryList() {
   content.innerHTML = htmlContent;
 
   // Pridedame klausytojus po HTML sugeneravimo
-  categories.forEach(category => category.attachEditListeners(categories, displayCategoryList));
+  categories.forEach(category => category.attachEditListeners(categories, displayCategoryList, beKategorijos, mainLibrary));
 }
+
 
 //__________HTML turinio kurimas --> prideti knyga________
 
@@ -134,80 +138,78 @@ const showBookForm = document.getElementById("addBookOption");
 showBookForm.addEventListener("click", () => displayAddBookForm());
 
 function displayAddBookForm() {
-    content.innerHTML = `
-      <h2>Pridėti naują knygą</h2>
-      <form id="addBookForm" class="addForm">
+  const filteredCategories = mainLibrary.getCategories().filter(cat => cat.getCategoryName() !== 'Be kategorijos')
+  content.innerHTML = `
+  <h2>Pridėti naują knygą</h2>
+  <form id="addBookForm" class="addForm">
+      <label for="bookIsbn">Knygos ISBN:</label>
+      <input type="text" id="bookIsbn" minlength="13" maxlength="13" required>
 
-          <label for="bookIsbn">Knygos ISBN:</label>
-          <input type="text" id="bookIsbn" minlength="13" maxlength="13" required>
+      <label for="bookTitle">Knygos pavadinimas:</label>
+      <input type="text" id="bookTitle" required>
 
-          <label for="bookTitle">Knygos pavadinimas:</label>
-          <input type="text" id="bookTitle" required>
+      <label for="bookAuthor">Knygos autorius:</label>
+      <input type="text" id="bookAuthor" required>
 
-          <label for="bookAuthor">Knygos autorius:</label>
-          <input type="text" id="bookAuthor" required>
+      <label for="bookPrice">Knygos kaina:</label>
+      <input type="text" id="bookPrice" required>
 
-          <label for="bookPrice">Knygos kaina:</label>
-          <input type="text" id="bookPrice" required>
+      <label for="bookDescription">Knygos aprašymas:</label>
+      <textarea name="description" id="bookDescription" rows="5" cols="30"></textarea>
 
-          <label for="bookDescription">Knygos aprašymas:</label>
-          <textarea name="description" id="bookDescription" rows="5" cols="30"></textarea>
-          <label for="categorySelect">Pasirinkite kategoriją:</label>
-          <select id="categorySelect" required>
-            <option value="">Pasirinkite kategoriją</option>
-            ${mainLibrary
-              .getCategories()
-              .map(
-                (category) =>
-                  `<option value='${category.getCategoryName()}'>${category.getCategoryName()}</option>`
-              )}
-          </select>
+      <label for="categorySelect">Pasirinkite kategoriją:</label>
+      <select id="categorySelect" required>
+          <option value="">Pasirinkite kategoriją</option>
+          ${filteredCategories.map(category => 
+              `<option value="${category.getCategoryName()}">${category.getCategoryName()}</option>`
+          ).join("")}
+      </select>
 
-          <button class="btn" type="submit">Išsaugoti Knygą</button>
-      </form>
-      `;
-  
-    const bookForm = document.getElementById("addBookForm");
-    bookForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const bookIsbn = e.target.bookIsbn.value;
-      const bookTitle = e.target.bookTitle.value;
-      const bookAuthor = e.target.bookAuthor.value;
-      const bookPrice = parseFloat(e.target.bookPrice.value); 
-      const description = e.target.bookDescription.value;
-      const categoryName = e.target.categorySelect.value;  
-      const isCheckedOut = false;
-  
-      const category = mainLibrary.getCategories().find(c => c.getCategoryName() === categoryName);
-      
-      if (!category) {
-          console.log("Category not found!");
-          return;
-      }
-  
-      const newBook = new Book(
-        bookTitle,
-        bookAuthor,
-        category,
-        bookIsbn,
-        bookPrice,
-        description,
-        isCheckedOut
-      );
-  
-      category.addBook(newBook);
-      console.log(`Book "${newBook.getBookTitle()}" added to category "${category.getCategoryName()}"`);
-      console.log(mainLibrary)
-      e.target.reset();
-    });
-  }
+      <button class="btn" type="submit">Išsaugoti Knygą</button>
+  </form>
+`;
+
+  const bookForm = document.getElementById("addBookForm");
+  bookForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const bookIsbn = e.target.bookIsbn.value;
+    const bookTitle = e.target.bookTitle.value;
+    const bookAuthor = e.target.bookAuthor.value;
+    const bookPrice = parseFloat(e.target.bookPrice.value);
+    const description = e.target.bookDescription.value;
+    const categoryName = e.target.categorySelect.value;
+    const isCheckedOut = false;
+
+    const category = mainLibrary.getCategories().find(c => c.getCategoryName() === categoryName);
+
+    if (!category) {
+      console.log("Category not found!");
+      return;
+    }
+
+    const newBook = new Book(
+      bookTitle,
+      bookAuthor,
+      category,
+      bookIsbn,
+      bookPrice,
+      description,
+      isCheckedOut
+    );
+
+    category.addBook(newBook);
+    console.log(`Book "${newBook.getBookTitle()}" added to category "${category.getCategoryName()}"`);
+    console.log(mainLibrary)
+    e.target.reset();
+  });
+}
 
 //-------------HTML turinio kurimas-> KNYGU SARASAS------------------
 
 const showBooksList = document.getElementById("showBooksList");
 
 
-showBooksList.addEventListener("click", () => mainLibrary.generateBookList()); 
+showBooksList.addEventListener("click", () => mainLibrary.generateBookList());
 
 //__________HTML turinio kurimas --> prideti skaitytoja________
 
@@ -252,5 +254,4 @@ function displayAddReaderForm() {
 
 const showReadersList = document.getElementById("showReadersList");
 
-showReadersList.addEventListener("click", () => mainLibrary.generateReadersList()); 
-
+showReadersList.addEventListener("click", () => mainLibrary.generateReadersList());

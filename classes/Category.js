@@ -46,6 +46,7 @@ class Category {
 
     // setteriai
 
+
     addBook(book) {
         if (book instanceof Book) {
             this.#books.push(book);
@@ -79,6 +80,16 @@ class Category {
                 this.editCategory(categoryId, categories, displayCategoryList);
             });
         });
+    }
+    attachEditListeners(categories, displayCategoryList, beKategorijos, mainLibrary) { // Pridedam categories kaip parametrą
+        const editButtons = document.querySelectorAll('.edit-button');
+        editButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const categoryId = button.getAttribute('data-category-id');
+                console.log(`Redaguoti kategoriją su ID: ${categoryId}`);
+                this.editCategory(categoryId, categories, displayCategoryList);
+            });
+        });
 
         const deleteButtons = document.querySelectorAll('.delete-button');
         deleteButtons.forEach(button => {
@@ -86,7 +97,7 @@ class Category {
                 const categoryId = button.getAttribute('data-category-id');
                 // console.log(typeof categoryId)
                 console.log(`Ištrinti kategoriją su ID: ${categoryId}`);
-                this.deleteCategory(categoryId, categories, displayCategoryList);
+                this.deleteCategory(categoryId, categories, displayCategoryList, beKategorijos, mainLibrary);
             });
         });
     }
@@ -112,15 +123,23 @@ class Category {
         });
     }
 
-    deleteCategory(categoryId, categories, displayCategoryList) {
+    deleteCategory(categoryId, categories, displayCategoryList, beKategorijos, mainLibrary) {
         const category = categories.findIndex(c => c.getCategoryId() === parseInt(categoryId));
         if (category !== -1) {
+            const categoryToDelete = categories[category];
+            const booksToMove = categoryToDelete.getBooks();
+            booksToMove.forEach(book => {
+                book.setCategory(beKategorijos);
+                beKategorijos.addBook(book);
+                categoryToDelete.#books = [];
+
+            })
             categories.splice(category, 1);
+            mainLibrary.getCategories().splice(category, 1)
         }
         displayCategoryList();
         console.log(`${categoryId} buvo pasalinta.`)
     }
-    
     getEditFormHTML(category) {
         return `
         <h2>Redaguoti Kategoriją</h2>
@@ -132,5 +151,4 @@ class Category {
     `;
     }
 }
-
 export default Category;
