@@ -41,6 +41,39 @@
                 <div class="logo">GB</div>
             </div>
             <main class="main">
+                <div id="introScreen" class="intro">
+                    <h1>Sveiki atvyke į geriausia biblioteka</h1>
+                    <p>Tai nebuvo pats sudėtingiausias projektas, bet tikrai pareikalavo naujų įgūdžių. Pradėdami daugelio dalykų dar nemokėjome arba jie buvo silpni – bendradarbiavimas, kodavimas ar kiti techniniai dalykai.
+                        Tačiau galiu drąsiai sakyti, kad visi kažko išmokome! Manau svarbiausia šiame dalyke buvo geriau pažinti vienas kitą ir tai tikrai padarėme.
+                    </p>
+                    <div class="contributors">
+                        <div class="card">
+                            <h3>Meilė</h3>
+                            <p class="link">GitHub: <a href="https://github.com/MeileBag" target="_blank">github.com/MeileBag</a></p>
+                        </div>
+                        <div class="card">
+                            <h3>Donatas</h3>
+                            <p class="link">GitHub: <a href="https://github.com/Pasikas123" target="_blank">github.com/Pasikas123</a></p>
+                        </div>
+                        <div class="card">
+                            <h3>Edgaras</h3>
+                            <p class="link">GitHub: <a href="https://github.com/Lexgur" target="_blank">github.com/Lexgur</a></p>
+                        </div>
+                        <div class="card">
+                            <h3>Rokas</h3>
+                            <p class="link">GitHub: <a href="https://github.com/rokassturma" target="_blank">github.com/rokassturma</a></p>
+                        </div>
+                        <div class="card">
+                            <h3>Jolanta</h3>
+                            <p class="link">GitHub: <a href="https://github.com/jolgri" target="_blank">github.com/jolgri</a></p>
+                        </div>
+                        <div class="card">
+                            <h3>Aurelijus</h3>
+                            <p class="link">GitHub: <a href="https://github.com/aurelijusrut" target="_blank">github.com/aurelijusrut</a></p>
+                        </div>
+                    </div>
+                    
+                </div>
                 <div id="content">
                     <!-- Čia bus dinamiškai įkeliama informacija -->
                 </div>
@@ -51,5 +84,18 @@
         </div>
     </div>
 <script src="./assets/hamburger.js"></script>
+<script>
+    const introScreen = document.getElementById('introScreen');
+    const buttons = document.querySelectorAll('.menu-btn, .hamburger, .close-btn');
+    const content = document.getElementById('content');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            introScreen.classList.add('hidden'); // Hide intro screen
+            content.classList.remove('hidden'); // Show content
+        });
+    });
+</script>
+  </script>
 </body>
 </html>
