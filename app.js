@@ -16,6 +16,23 @@ const komedijuKategorija = new Category("Komedija", mainLibrary);
 
 window.borrowReturn = librarySystem;
 
+// Wait for the DOM to load
+document.addEventListener('DOMContentLoaded', function () {
+    // Get the intro screen element
+    const introScreen = document.getElementById('introScreen');
+
+    // Get all buttons (both in the nav and sidebar)
+    const buttons = document.querySelectorAll('.menu-btn, .hamburger, .close-btn');
+
+    // Add event listeners to all buttons
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Hide the intro screen when any button is clicked
+            introScreen.classList.add('hidden');
+        });
+    });
+});
+
 categories.push(trileriuKategorija, siauboKategorija, komedijuKategorija);
 
 const newBook2 = new Book(
