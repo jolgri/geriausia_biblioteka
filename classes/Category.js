@@ -7,11 +7,13 @@ class Category {
     #id;
     #categoryName;
     #books;
+    #library;
 
     constructor(categoryName, library) {
         this.#id = Category.counter++;
         this.#categoryName = categoryName;
         this.#books = []; // Knygų masyvas
+        this.#library = library;
 
         if (library instanceof Library) {
             library.addCategory(this);
@@ -69,6 +71,15 @@ class Category {
             throw new Error("Kategorijos pavadinimas negali būti tuščias");
         }
     }
+    attachEditListeners(categories, displayCategoryList) { // Pridedam categories kaip parametrą
+        const editButtons = document.querySelectorAll('.edit-button');
+        editButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const categoryId = button.getAttribute('data-category-id');
+                console.log(`Redaguoti kategoriją su ID: ${categoryId}`);
+                this.editCategory(categoryId, categories, displayCategoryList);
+            });
+        });
 
     attachEditListeners(categories, displayCategoryList) { // Pridedam categories kaip parametrą
         const editButtons = document.querySelectorAll('.edit-button');
@@ -120,7 +131,6 @@ class Category {
         displayCategoryList();
         console.log(`${categoryId} buvo pasalinta.`)
     }
-
     getEditFormHTML(category) {
         return `
         <h2>Redaguoti Kategoriją</h2>
@@ -131,7 +141,6 @@ class Category {
     </form>
     `;
     }
-
 }
 
 export default Category;

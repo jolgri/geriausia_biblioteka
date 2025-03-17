@@ -108,5 +108,4 @@ class BorrowReturn {
         modal.innerHTML = '';
     }
 }
-
 export default BorrowReturn;
