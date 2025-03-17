@@ -80,7 +80,7 @@ class Category {
                 this.editCategory(categoryId, categories, displayCategoryList);
             });
         });
-
+    }
     attachEditListeners(categories, displayCategoryList) { // Pridedam categories kaip parametrą
         const editButtons = document.querySelectorAll('.edit-button');
         editButtons.forEach(button => {
@@ -142,5 +142,4 @@ class Category {
     `;
     }
 }
-
 export default Category;
