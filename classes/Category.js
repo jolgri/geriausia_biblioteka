@@ -81,7 +81,7 @@ class Category {
             });
         });
     }
-    attachEditListeners(categories, displayCategoryList) { // Pridedam categories kaip parametrą
+    attachEditListeners(categories, displayCategoryList, beKategorijos, mainLibrary) { // Pridedam categories kaip parametrą
         const editButtons = document.querySelectorAll('.edit-button');
         editButtons.forEach(button => {
             button.addEventListener('click', () => {
@@ -97,7 +97,7 @@ class Category {
                 const categoryId = button.getAttribute('data-category-id');
                 // console.log(typeof categoryId)
                 console.log(`Ištrinti kategoriją su ID: ${categoryId}`);
-                this.deleteCategory(categoryId, categories, displayCategoryList);
+                this.deleteCategory(categoryId, categories, displayCategoryList, beKategorijos, mainLibrary);
             });
         });
     }
@@ -123,10 +123,19 @@ class Category {
         });
     }
 
-    deleteCategory(categoryId, categories, displayCategoryList) {
+    deleteCategory(categoryId, categories, displayCategoryList, beKategorijos, mainLibrary) {
         const category = categories.findIndex(c => c.getCategoryId() === parseInt(categoryId));
         if (category !== -1) {
+            const categoryToDelete = categories[category];
+            const booksToMove = categoryToDelete.getBooks();
+            booksToMove.forEach(book => {
+                book.setCategory(beKategorijos);
+                beKategorijos.addBook(book);
+                categoryToDelete.#books = [];
+
+            })
             categories.splice(category, 1);
+            mainLibrary.getCategories().splice(category, 1)
         }
         displayCategoryList();
         console.log(`${categoryId} buvo pasalinta.`)

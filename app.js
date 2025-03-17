@@ -13,10 +13,11 @@ const categories = [];
 const trileriuKategorija = new Category("Trileriai", mainLibrary);
 const siauboKategorija = new Category("Siaubo", mainLibrary);
 const komedijuKategorija = new Category("Komedija", mainLibrary);
+const beKategorijos = new Category('Be kategorijos', mainLibrary);
 
 window.borrowReturn = librarySystem;
 
-categories.push(trileriuKategorija, siauboKategorija, komedijuKategorija);
+categories.push(trileriuKategorija, siauboKategorija, komedijuKategorija, beKategorijos);
 
 
 const newBook2 = new Book(
@@ -97,6 +98,7 @@ function displayCategoryList() {
       return;
   }
 
+  const filteredCategories = categories.filter(cat => cat.getCategoryName() !== 'Be kategorijos');
   let htmlContent = `<table>
       <tr>
           <th>Eil. nr.</th>
@@ -105,7 +107,7 @@ function displayCategoryList() {
       </tr>
   `;
   let counter = 0;
-  categories.forEach(cat => {
+  filteredCategories.forEach(cat => {
       htmlContent += `
           <tr>
               <td>${++counter}</td>
@@ -125,7 +127,7 @@ function displayCategoryList() {
   content.innerHTML = htmlContent;
 
   // Pridedame klausytojus po HTML sugeneravimo
-  categories.forEach(category => category.attachEditListeners(categories, displayCategoryList));
+  categories.forEach(category => category.attachEditListeners(categories, displayCategoryList, beKategorijos, mainLibrary));
 }
 
 
@@ -136,38 +138,36 @@ const showBookForm = document.getElementById("addBookOption");
 showBookForm.addEventListener("click", () => displayAddBookForm());
 
 function displayAddBookForm() {
+  const filteredCategories = mainLibrary.getCategories().filter(cat => cat.getCategoryName() !== 'Be kategorijos')
   content.innerHTML = `
-    < h2 > Pridėti naują knygą</h2 >
-      <form id="addBookForm" class="addForm">
+  <h2>Pridėti naują knygą</h2>
+  <form id="addBookForm" class="addForm">
+      <label for="bookIsbn">Knygos ISBN:</label>
+      <input type="text" id="bookIsbn" minlength="13" maxlength="13" required>
 
-        <label for="bookIsbn">Knygos ISBN:</label>
-        <input type="text" id="bookIsbn" minlength="13" maxlength="13" required>
+      <label for="bookTitle">Knygos pavadinimas:</label>
+      <input type="text" id="bookTitle" required>
 
-          <label for="bookTitle">Knygos pavadinimas:</label>
-          <input type="text" id="bookTitle" required>
+      <label for="bookAuthor">Knygos autorius:</label>
+      <input type="text" id="bookAuthor" required>
 
-            <label for="bookAuthor">Knygos autorius:</label>
-            <input type="text" id="bookAuthor" required>
+      <label for="bookPrice">Knygos kaina:</label>
+      <input type="text" id="bookPrice" required>
 
-              <label for="bookPrice">Knygos kaina:</label>
-              <input type="text" id="bookPrice" required>
+      <label for="bookDescription">Knygos aprašymas:</label>
+      <textarea name="description" id="bookDescription" rows="5" cols="30"></textarea>
 
-                <label for="bookDescription">Knygos aprašymas:</label>
-                <textarea name="description" id="bookDescription" rows="5" cols="30"></textarea>
-                <label for="categorySelect">Pasirinkite kategoriją:</label>
-                <select id="categorySelect" required>
-                  <option value="">Pasirinkite kategoriją</option>
-                  ${mainLibrary
-      .getCategories()
-      .map(
-        (category) =>
-          `<option value='${category.getCategoryName()}'>${category.getCategoryName()}</option>`
-      )}
-                </select>
+      <label for="categorySelect">Pasirinkite kategoriją:</label>
+      <select id="categorySelect" required>
+          <option value="">Pasirinkite kategoriją</option>
+          ${filteredCategories.map(category => 
+              `<option value="${category.getCategoryName()}">${category.getCategoryName()}</option>`
+          ).join("")}
+      </select>
 
-                <button class="btn" type="submit">Išsaugoti Knygą</button>
-              </form>
-              `;
+      <button class="btn" type="submit">Išsaugoti Knygą</button>
+  </form>
+`;
 
   const bookForm = document.getElementById("addBookForm");
   bookForm.addEventListener("submit", (e) => {
