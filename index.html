@@ -84,5 +84,17 @@
         </div>
     </div>
 <script src="./assets/hamburger.js"></script>
+<script>
+
+    const introScreen = document.getElementById('introScreen');
+  
+    const buttons = document.querySelectorAll('.menu-btn, .hamburger, .close-btn');
+  
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        introScreen.classList.add('hidden');
+      });
+    });
+  </script>
 </body>
 </html>
